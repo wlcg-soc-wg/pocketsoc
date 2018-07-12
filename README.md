@@ -50,16 +50,8 @@ docker-compose up -d
 - [development] Check IP addresses for each container, eg:
 
 ```
-echo "Client network:"
-
 docker exec client ifconfig | grep -A 1 ^eth
-
-echo -e "\nWebserver network:"
-
 docker exec webserver ifconfig | grep -A 1 ^eth
-
-echo -e "\nRouter network:"
-
 docker exec router ifconfig | grep -A 1 ^eth
 ```
 ```
@@ -92,7 +84,7 @@ docker exec router /files/routing
 - [development] Check that `client` has `router` as its default route:
 
 ```
-docker exec ip route
+docker exec client ip route
 ```
 - [development] If necessary, put this in place
 ```
@@ -102,7 +94,7 @@ docker exec client ip route add default via [ROUTER_IP]
 ```
 docker exec bro grep [WEBSERVER_IP] /files/testdata.txt`
 ```
-If not, `docker exec bro bash` and fix it.
+If not, `docker exec -it bro bash` and fix it.
 
 - Check that `client` can talk to `webserver` via `ping` or otherwise
 ```
@@ -112,7 +104,7 @@ docker exec client ping [WEBSERVER_IP]
 - Access some data from `webserver` on `client`, eg
 
 ```
-curl http://[WEBSERVER_IP]/demonstrator/
+docker exec client curl -s http://[WEBSERVER_IP]/demonstrator/
 ```
 - Check that this works OK
 - On `bro`, check that the contents of `/opt/bro/logs/current/` looks something like this:

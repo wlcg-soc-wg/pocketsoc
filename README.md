@@ -82,9 +82,9 @@ eth2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         inet 172.19.0.3  netmask 255.255.0.0  broadcast 172.19.255.255
 ```
 
-- [development] Check that the iptables rules described in `/scripts/routing` on `router` match what you expect from this configuration
+- [development] Check that the iptables rules described in `/files/routing` on `router` match what you expect from this configuration
 
-- [development] Run `/scripts/routing` on `router` to activate these rules. **This is a key step**
+- [development] Run `/files/routing` on `router` to activate these rules. **This is a key step**
 
 ```
 docker exec router /files/routing
@@ -122,7 +122,7 @@ capture_loss.log   files.log  known_hosts.log     packet_filter.log  stderr.log
 communication.log  http.log   known_services.log  software.log       stdout.log
 conn.log           intel.log  loaded_scripts.log  stats.log
 ```
-- If the IP address of `client` or `webserver matches `/scripts/testdata.txt`, you should see a populated `intel.log` file.
+- If the IP address of `client` or `webserver matches `/files/testdata.txt`, you should see a populated `intel.log` file.
 ```
 docker exec bro grep [WEBSERVER_IP] /opt/bro/logs/current/intel.log
 ```

@@ -1,0 +1,40 @@
+version: '3.5'
+
+services:
+  webserver:
+    build: ./webserver/
+    container_name: webserver
+    privileged: true
+    networks:
+      - external
+
+  client:
+    build: ./client/
+    container_name: client
+    privileged: true
+    networks:
+      - internal
+
+  bro:
+    build: ./bro/
+    container_name: bro
+    privileged: true
+    networks:
+      - mirror
+
+  router:
+    build: ./router/
+    container_name: router
+    privileged: true
+    networks:
+      - mirror
+      - internal
+      - external
+
+networks:
+  mirror:
+    name: mirror
+  internal:
+    name: internal
+  external:
+    name: external

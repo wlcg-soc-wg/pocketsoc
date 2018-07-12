@@ -1,0 +1,18 @@
+#! /bin/bash
+
+# Define interfaces
+
+external=eth0
+internal=eth2
+
+# Configure routing
+
+iptables -t nat -A POSTROUTING -o $external -j MASQUERADE
+iptables -A FORWARD -i $external -o $internal -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i $internal -o $external -j ACCEPT
+
+# Configure mirroring
+
+iptables -t mangle -A PREROUTING -j TEE -i eth0 --gateway bro.mirror
+iptables -t mangle -A PREROUTING -j TEE -i eth2 --gateway bro.mirror
+iptables -t mangle -A POSTROUTING -j TEE --gateway bro.mirror

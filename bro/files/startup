@@ -1,0 +1,4 @@
+#! /bin/bash
+
+/opt/bro/bin/broctl deploy
+tail -f /dev/null

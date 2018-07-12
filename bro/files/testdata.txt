@@ -1,0 +1,2 @@
+#fields	indicator	indicator_type	meta.source
+172.20.0.2	Intel::ADDR	demonstrator

@@ -32,7 +32,7 @@ The router is then configured to route traffic between the client and webserver,
 
 A network diagram showing the configuration is given below
 
-![](demonstrator-network-diagram.png)
+![](demonstrator-network-diagram.pdf)
 
 This diagram additionally shows a `misp` node which be added shortly.
 ## Usage

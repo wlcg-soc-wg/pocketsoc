@@ -43,7 +43,7 @@ This diagram additionally shows a `misp` node which be added shortly.
 docker-compose build
 ```
 
-This builds a new image for each component. The demonstrator is intended to reflect the WG deployment documentation, so each container starts from a base centos:7 image - this step can therefore take a few minutes
+This builds a new image for each component. The demonstrator is intended to reflect the WG deployment [documentation](http://wlcg-soc-wg-doc.web.cern.ch/wlcg-soc-wg-doc/), so each container starts from a base centos:7 image - this step can therefore take a few minutes
 
 - Bring up containers in the background
 

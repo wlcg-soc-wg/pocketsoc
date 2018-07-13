@@ -86,22 +86,29 @@ eth2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 ```
 docker exec router /files/routing
 ```
+
 - [development] Check that `client` has `router` as its default route:
 
 ```
 docker exec client ip route
 ```
+
 - [development] If necessary, put this in place
+
 ```
 docker exec client ip route add default via [ROUTER_IP]
 ```
+
 - Check that the IP address for `webserver` or `client`  matches the intel file on `bro` in `/files/testdata.txt`
+
 ```
-docker exec bro grep [WEBSERVER_IP] /files/testdata.txt`
+docker exec bro grep [WEBSERVER_IP] /files/testdata.txt
 ```
+
 If not, `docker exec -it bro bash` and fix it.
 
 - Check that `client` can talk to `webserver` via `ping` or otherwise
+
 ```
 docker exec client ping [WEBSERVER_IP]
 ```
@@ -120,18 +127,25 @@ capture_loss.log   files.log  known_hosts.log     packet_filter.log  stderr.log
 communication.log  http.log   known_services.log  software.log       stdout.log
 conn.log           intel.log  loaded_scripts.log  stats.log
 ```
-- If the IP address of `client` or `webserver matches `/files/testdata.txt`, you should see a populated `intel.log` file.
+
+- If the IP address of `client` or `webserver` matches `/files/testdata.txt`, you should see a populated `intel.log` file.
+
 ```
 docker exec bro grep [WEBSERVER_IP] /opt/bro/logs/current/intel.log
 ```
+
 - Watch live traffic
+
 ```
 docker exec bro tail -f /opt/bro/logs/current/conn.log
 ```
+
 On client
+
 ```
 docker exec curl [WEBSERVER_IP]
 ```
+
 You should see `conn.log` populating with traffic.
 
 

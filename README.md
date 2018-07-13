@@ -30,6 +30,9 @@ Each container is configured to belong to a specific set of these:
 
 The router is then configured to route traffic between the client and webserver, mirroring the consequent packets to the bro node via the mirror network.
 
+A network diagram showing the configuration is given below
+
+![](demonstrator-network-diagram.png)
 ## Usage
 
 - Build docker images with docker-compose

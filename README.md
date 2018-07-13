@@ -104,13 +104,14 @@ If not, `docker exec -it bro bash` and fix it.
 - Check that `client` can talk to `webserver` via `ping` or otherwise
 ```
 docker exec client ping [WEBSERVER_IP]
-
 ```
+
 - Access some data from `webserver` on `client`, eg
 
 ```
 docker exec client curl -s http://[WEBSERVER_IP]/demonstrator/
 ```
+
 - Check that this works OK
 - On `bro`, check that the contents of `/opt/bro/logs/current/` looks something like this:
 

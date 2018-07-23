@@ -1,0 +1,7 @@
+#! /bin/bash
+
+/usr/bin/mkdir -p /var/run/naemon && /usr/bin/chown -R naemon:naemon /var/run/naemon/ && /bin/su naemon --login --shell=/bin/sh "--command=/usr/bin/naemon --verify-config /etc/naemon/naemon.cfg" && su naemon -c "/usr/bin/naemon --daemon /etc/naemon/naemon.cfg"
+
+/usr/sbin/httpd -DFOREGROUND
+
+tail -f /dev/null

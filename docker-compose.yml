@@ -93,7 +93,7 @@ services:
     ports:
       - "8040:80"
     volumes:
-      - ../misp-docker/data/misp:/var/www/MISP
+      - ./misp-data/misp:/var/www/MISP
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_MISP_PASSWORD=misp
@@ -117,7 +117,7 @@ services:
       mirror:
         ipv4_address: 172.20.0.21
     volumes:
-      - ../misp-docker/data/mysql:/var/lib/mysql
+      - ./misp-data/mysql:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
 

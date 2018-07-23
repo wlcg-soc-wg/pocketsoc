@@ -1,9 +1,14 @@
 #! /bin/bash
 
+# Confirm client,webserver interfaces
+
+external_subnet="172.19"
+internal_subnet="172.18"
+
 # Define interfaces
 
-external=eth0
-internal=eth2
+external=`ifconfig | grep -B 1 $external_subnet | grep ^eth | awk '{print $1}' | cut -d: -f1`
+internal=`ifconfig | grep -B 1 $internal_subnet | grep ^eth | awk '{print $1}' | cut -d: -f1`
 
 # Configure routing
 

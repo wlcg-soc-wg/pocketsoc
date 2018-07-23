@@ -104,6 +104,6 @@
 redef ignore_checksums = T;
 
 
-redef Intel::read_files += { "/files/testdata.txt" };
+redef Intel::read_files += { "/files/feeds/testdata.txt" };
 
 @load policy/frameworks/intel/seen

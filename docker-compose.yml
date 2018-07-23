@@ -1,40 +1,133 @@
-version: '3.5'
+version: '3'
 
 services:
   webserver:
     build: ./webserver/
     container_name: webserver
-    privileged: true
+    hostname: webserver
+    ports:
+      - 8031:80
+    cap_add:    
+      - NET_ADMIN
     networks:
-      - external
+      external:
+        ipv4_address: 172.19.0.14
 
   client:
     build: ./client/
     container_name: client
-    privileged: true
+    hostname: client
+    extra_hosts:
+      - "webserver:172.19.0.14"
+      - "router:172.18.0.10"
+    cap_add:
+      - NET_ADMIN
     networks:
-      - internal
+      internal:
+        ipv4_address: 172.18.0.15
 
   bro:
     build: ./bro/
     container_name: bro
-    privileged: true
+    hostname: bro
+    extra_hosts:
+      - "misp:172.20.0.20"
+    cap_add:
+      - NET_ADMIN
     networks:
-      - mirror
+      mirror:
+        ipv4_address: 172.20.0.15
 
   router:
     build: ./router/
     container_name: router
-    privileged: true
+    hostname: router
+    extra_hosts:
+      - "webserver:172.19.0.14"
+      - "client:172.18.0.15"
+    cap_add:
+      - NET_ADMIN
     networks:
-      - mirror
-      - internal
-      - external
+      mirror:
+        ipv4_address: 172.20.0.10
+      internal:
+        ipv4_address: 172.18.0.10
+      external:
+        ipv4_address: 172.19.0.10
+
+  monitor:
+    build: ./monitor/
+    container_name: monitor
+    hostname: monitor
+    ports:
+      - 8050:80
+    extra_hosts:
+      - "webserver:172.19.0.14"
+      - "client:172.18.0.15"
+      - "router:172.18.0.10"
+      - "misp-web:172.20.0.20"
+      - "misp-db:172.20.0.21"
+    cap_add:
+      - NET_ADMIN
+    networks:
+      mirror:
+        ipv4_address: 172.20.0.11
+      internal:
+        ipv4_address: 172.18.0.11
+      external:
+        ipv4_address: 172.19.0.11
+
+  misp-web:
+    build: misp-docker/misp-web
+    depends_on:
+      - misp-db
+    container_name: misp-web
+    hostname: misp-web
+    image: misp-web:latest
+    restart: always
+    networks:
+      mirror:
+        ipv4_address: 172.20.0.20
+    links:
+      - misp-db
+    ports:
+      - "8040:80"
+    volumes:
+      - ../misp-docker/data/misp:/var/www/MISP
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_MISP_PASSWORD=misp
+      - MYSQL_HOST=misp-db
+      - MISP_ADMIN_EMAIL=admin@admin.test
+      - MISP_ADMIN_PASSPHRASE=misp
+      - MISP_BASEURL=http:\/\/misp\.test
+      - POSTFIX_RELAY_HOST=relay.fqdn
+      - TIMEZONE=Europe/London
+
+  misp-db:
+    build:
+      context: misp-docker/misp-db
+      args:
+        MYSQL_MISP_PASSWORD: misp
+    container_name: misp-db
+    hostname: misp-db
+    image: misp-db:latest
+    restart: always
+    networks:
+      mirror:
+        ipv4_address: 172.20.0.21
+    volumes:
+      - ../misp-docker/data/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
 
 networks:
   mirror:
-    name: mirror
+    external:
+      name: mirror
   internal:
-    name: internal
+    external:
+      name: internal
   external:
-    name: external
+    external:
+      name: external

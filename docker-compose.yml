@@ -91,7 +91,7 @@ services:
     links:
       - misp-db
     ports:
-      - "8040:80"
+      - 8040:80
     volumes:
       - ./misp-data/misp:/var/www/MISP
     environment:

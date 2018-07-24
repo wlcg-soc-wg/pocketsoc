@@ -7,4 +7,4 @@ docker network create --subnet 172.20.0.0/16 mirror
 mkdir -p ./misp-data/{misp,mysql}
 
 docker-compose build
-docker-compose up -d
+docker-compose up

@@ -55,27 +55,27 @@ services:
       external:
         ipv4_address: 172.19.0.10
 
-  monitor:
-    build: ./monitor/
-    container_name: monitor
-    hostname: monitor
-    ports:
-      - 8050:80
-    extra_hosts:
-      - "webserver:172.19.0.14"
-      - "client:172.18.0.15"
-      - "router:172.18.0.10"
-      - "misp-web:172.20.0.20"
-      - "misp-db:172.20.0.21"
-    cap_add:
-      - NET_ADMIN
-    networks:
-      mirror:
-        ipv4_address: 172.20.0.11
-      internal:
-        ipv4_address: 172.18.0.11
-      external:
-        ipv4_address: 172.19.0.11
+#  monitor:
+#    build: ./monitor/
+#    container_name: monitor
+#    hostname: monitor
+#    ports:
+#      - 8050:80
+#    extra_hosts:
+#      - "webserver:172.19.0.14"
+#      - "client:172.18.0.15"
+#      - "router:172.18.0.10"
+#      - "misp-web:172.20.0.20"
+#      - "misp-db:172.20.0.21"
+#    cap_add:
+#      - NET_ADMIN
+#    networks:
+#      mirror:
+#        ipv4_address: 172.20.0.11
+#      internal:
+#        ipv4_address: 172.18.0.11
+#      external:
+#        ipv4_address: 172.19.0.11
 
   misp-web:
     build: misp-docker/misp-web

@@ -74,16 +74,16 @@ Steps to follow
 - Note in `conn.log` that the connections to misp-web continue. You can also see in `http.log` that these should have switched from `403` to `200` [CHECK]
 - Should now be able to see contents of `/files/feeds/testdata.txt` - just file headings
 - On `client`, check that webserver is accessible and issue `curl http://webserver/demonstrator/` which should give a "Hello world!"
-- on `bro`, should note presence of `172.20.19.14` in conn.log
+- on `bro`, should note presence of `172.19.0.14` in conn.log
 - in MISP UI (`127.0.0.1:8040`), add an event with "Event info -> Demo"  and add an attribute:
   - Category: Network activity
   - Type: ip-dst
-  - Value: 172.20.19.14
+  - Value: 172.19.0.14
   - Check "for Intrusion Detection System"
 - From sidebar, issue "Publish Event" -> "YES"
 - on `bro`, check that `/files/feeds/testdata.txt` now populates with this data (takes > 5 secs)
 - on `client`, rerun `curl http://webserver/demonstrator/`
-- on `bro`, check that `172.20.19.14` again appears in `conn.log`
+- on `bro`, check that `172.19.0.14` again appears in `conn.log`
 - on `bro`, there should also now be an `intel.log` file with relevant matches.
 
 

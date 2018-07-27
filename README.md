@@ -14,8 +14,12 @@ The current containers used by this demonstrator are:
 - bro
 - misp-web
 - misp-db
+- elasticsearch
+- logstash
+- kibana
 
 `misp-web` and `misp-db` are used from the misp-docker (XME edition) repo, part of the official MISP project, which is included as a submodule.
+`elasticsearch`, `kibana` and `logstash` are used from the docker-elk repo, https://github.com/deviantony/docker-elk, which uses the official elastic docker containers. 
 
 ## Networks
 
@@ -33,6 +37,9 @@ Each container is configured to belong to a specific set of these:
 - router: `internal`:`external`:`mirror`
 - misp-web: `mirror` only
 - misp-db: `mirror` only
+- elasticsearch: `mirror` only
+- logstash: `mirror` only
+- kibana: `mirror` only
 
 The router is then configured to route traffic between the client and webserver, mirroring the consequent packets to the bro node via the mirror network.
 

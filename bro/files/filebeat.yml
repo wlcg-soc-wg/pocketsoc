@@ -1,0 +1,11 @@
+filebeat.prospectors:
+- input_type: log
+  paths: 
+    - "/opt/bro/logs/current/conn.log"
+  fields:
+    type: "bro-conn"
+  fields_under_root: true
+ 
+output.logstash:
+  # The Logstash hosts
+  hosts: ["172.20.0.51:5044"]

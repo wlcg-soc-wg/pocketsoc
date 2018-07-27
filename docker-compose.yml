@@ -1,6 +1,51 @@
 version: '3'
 
 services:
+
+  elasticsearch:
+    build:
+      context: ./docker-elk/elasticsearch/
+    container_name: elasticsearch
+    hostname: elasticsearch
+    volumes:
+      - ./docker-elk/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      mirror:
+        ipv4_address: 172.20.0.50
+
+  logstash:
+    build:
+      context: ./docker-elk/logstash/
+    container_name: logstash
+    hostname: logstash
+    volumes:
+      - ./docker-elk/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./docker-elk/logstash/pipeline:/usr/share/logstash/pipeline:ro
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      mirror:
+        ipv4_address: 172.20.0.51
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    build:
+      context: ./docker-elk/kibana/
+    container_name: kibana
+    hostname: kibana
+    volumes:
+      - ./docker-elk/kibana/config/:/usr/share/kibana/config:ro
+    ports:
+      - "8060:5601"
+    networks:
+      mirror:
+        ipv4_address: 172.20.0.52
+    depends_on:
+      - elasticsearch
+
   webserver:
     build: ./webserver/
     container_name: webserver

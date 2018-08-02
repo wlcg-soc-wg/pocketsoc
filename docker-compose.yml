@@ -52,6 +52,12 @@ services:
     networks:
       external:
 
+  flask:
+    build: ./flask/
+    restart: always
+    networks:
+      external:
+
   client:
     build: ./client/
     container_name: client

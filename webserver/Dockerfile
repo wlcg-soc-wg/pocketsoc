@@ -1,8 +1,7 @@
 FROM centos:7
 
-RUN yum install -y httpd net-tools tcpdump iptables lsof
+RUN yum install -y httpd net-tools tcpdump iptables lsof vim
 
-ADD ./demonstrator /var/www/html/demonstrator
 ADD ./files /files
 
 EXPOSE 80

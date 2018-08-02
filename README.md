@@ -101,4 +101,4 @@ Steps to follow
 	- Various examples of traffic analysis can be carried out using kibana
 	- Various combinations of apache/flask instances can be spun up to represent more "typical" traffic patterns
 
-[image-1]:	demonstrator-network-diagram.png
+[image-1]: demonstrator-network-diagram.svg

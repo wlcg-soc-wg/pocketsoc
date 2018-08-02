@@ -1,4 +1,6 @@
 #! /bin/bash
 
+mkdir -p /var/www/html/demonstrator/
+hashstring=`date``hostname`
+echo $hashstring > /var/www/html/demonstrator/index.html
 /usr/sbin/httpd -D FOREGROUND
-tail -f /dev/null

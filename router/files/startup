@@ -1,4 +1,5 @@
 #! /bin/bash
 
 /files/routing
+/usr/sbin/dnsmasq -k
 tail -f /dev/null

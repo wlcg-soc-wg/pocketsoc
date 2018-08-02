@@ -46,25 +46,18 @@ services:
     depends_on:
       - elasticsearch
 
-  webserver:
-    build: ./webserver/
-    container_name: webserver
-    hostname: webserver
-    ports:
-      - 8031:80
-    cap_add:    
-      - NET_ADMIN
+  apache:
+    build: ./apache/
+    restart: always
     networks:
       external:
-        ipv4_address: 172.19.0.14
 
   client:
     build: ./client/
     container_name: client
     hostname: client
-    extra_hosts:
-      - "webserver:172.19.0.14"
-      - "router:172.18.0.10"
+    dns:
+      - "172.18.0.100"
     cap_add:
       - NET_ADMIN
     networks:
@@ -75,8 +68,6 @@ services:
     build: ./bro/
     container_name: bro
     hostname: bro
-    extra_hosts:
-      - "misp:172.20.0.20"
     cap_add:
       - NET_ADMIN
     networks:
@@ -87,47 +78,22 @@ services:
     build: ./router/
     container_name: router
     hostname: router
-    extra_hosts:
-      - "webserver:172.19.0.14"
-      - "client:172.18.0.15"
     cap_add:
       - NET_ADMIN
     networks:
       mirror:
-        ipv4_address: 172.20.0.10
+        ipv4_address: 172.20.0.100
       internal:
-        ipv4_address: 172.18.0.10
+        ipv4_address: 172.18.0.100
       external:
-        ipv4_address: 172.19.0.10
-
-#  monitor:
-#    build: ./monitor/
-#    container_name: monitor
-#    hostname: monitor
-#    ports:
-#      - 8050:80
-#    extra_hosts:
-#      - "webserver:172.19.0.14"
-#      - "client:172.18.0.15"
-#      - "router:172.18.0.10"
-#      - "misp-web:172.20.0.20"
-#      - "misp-db:172.20.0.21"
-#    cap_add:
-#      - NET_ADMIN
-#    networks:
-#      mirror:
-#        ipv4_address: 172.20.0.11
-#      internal:
-#        ipv4_address: 172.18.0.11
-#      external:
-#        ipv4_address: 172.19.0.11
+        ipv4_address: 172.19.0.100
 
   misp-web:
     build: misp-docker/misp-web
-    depends_on:
-      - misp-db
     container_name: misp-web
     hostname: misp-web
+    depends_on:
+      - misp-db
     image: misp-web:latest
     restart: always
     networks:

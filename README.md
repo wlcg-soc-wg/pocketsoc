@@ -9,7 +9,8 @@ A test, **non-production** SOC demonstrator, intended to track the lifecycle of 
 The current containers used by this demonstrator are:
 
 - client
-- webserver
+- apache\*
+- flask\*
 - router
 - bro
 - misp-web
@@ -18,9 +19,11 @@ The current containers used by this demonstrator are:
 - logstash
 - kibana
 
-`misp-web` and `misp-db` are used from the misp-docker (XME edition) repo, part of the official MISP project, which is included as a submodule.
-`elasticsearch`, `kibana` and `logstash` are used from the docker-elk repo, https://github.com/deviantony/docker-elk, which uses the official elastic docker containers. 
+### Notes
 
+- `misp-web` and `misp-db` are used from the misp-docker (XME edition) repo, part of the official MISP project, which is included as a submodule.
+- `elasticsearch`, `kibana` and `logstash` are used from the docker-elk repo, https://github.com/deviantony/docker-elk, which uses the official elastic docker containers. 
+- `apache` and `flask` are designed as sources of traffic (static and dynamic respectively) and are designed to scale to multiple instances.
 ## Networks
 
 Three internal docker networks are used:
@@ -32,7 +35,8 @@ Three internal docker networks are used:
 Each container is configured to belong to a specific set of these: 
 
 - client: `internal` only
-- webserver: `external` only
+- apache: `external` only
+- flask: `external` only
 - bro: `mirror` only
 - router: `internal`:`external`:`mirror`
 - misp-web: `mirror` only
@@ -41,29 +45,28 @@ Each container is configured to belong to a specific set of these:
 - logstash: `mirror` only
 - kibana: `mirror` only
 
-The router is then configured to route traffic between the client and webserver, mirroring the consequent packets to the bro node via the mirror network.
+The router is then configured to route traffic between the client and apache/flask instances, mirroring the consequent packets to the bro node via the mirror network.
 
 A network diagram showing the configuration is given below
 
-![](demonstrator-network-diagram.png)
+![][image-1]
 ## Usage
 
 ### Quickstart
 
 - Clone repo
 - Inside repo, run `git submodule update --init` to pull in dependencies
-- Run `./build.sh`
+- Run `./build-clean.sh`
 - Build should take a few minutes
 - Following build, containers will be automatically started.
 - Visit `127.0.0.1:8040` to see MISP login page
   - Log in with `admin@admin.test:admin` and change password
-- Visit `127.0.0.1:8031/demonstrator/` to see contents of webserver
 - Use, for example, `docker exec -it CONTAINER bash` to access a particular container. They are designed to continue running even if a service is not live.
 
 #### Troubleshooting
 
 - If containers don't start properly, `Ctrl-C` to stop containers, and re-run `docker-compose up` (particularly if you see error messages like "could not connect to database")
-- Make sure you're in the `docker-soc-demonstrator` directory proper - there is another `docker-compose.yml` file in the `misp-docker` subdirectory (the XME misp-docker repo), but we override this with different network settings to make our cluster work.
+- Make sure you're in the `docker-soc-demonstrator` directory proper - there are other `docker-compose.yml` files in the `misp-docker` subdirectory (the XME misp-docker repo) and `docker-elk` subdirectory, but we override this with different network settings to make our cluster work.
 
 ### Demo workflow
 
@@ -81,15 +84,21 @@ Steps to follow
 - Note in `conn.log` that the connections to misp-web continue. You can also see in `http.log` that these should have switched from `403:Forbidden` to `200:OK`. 
 - You can use `bro-cut` here to pull out particular fields, eg `cat http.log | /opt/bro/bin/bro-cut -d ts id.orig_h id.resp_h status_code status_msg | tail -1` to get the last entry
 - Should now be able to see contents of `/files/feeds/testdata.txt` - just file headings
-- On `client`, check that webserver is accessible and issue `curl http://webserver/demonstrator/` which should give a "Hello world!"
-- on `bro`, should note presence of `172.19.0.14` in conn.log
-- in MISP UI (`127.0.0.1:8040`), add an event with "Event info -> Demo"  and add an attribute:
-  - Category: Network activity
-  - Type: ip-dst
-  - Value: 172.19.0.14
-  - Check "for Intrusion Detection System"
-- From sidebar, issue "Publish Event" -> "YES"
-- on `bro`, check that `/files/feeds/testdata.txt` now populates with this data (takes > 5 secs)
-- on `client`, rerun `curl http://webserver/demonstrator/`
-- on `bro`, check that `172.19.0.14` again appears in `conn.log`
+- On `client`, check that demo\_apache\_1 is accessible and issue `curl http://demo_apache_1/` which should give "SOC Demonstrator, static content"
+- On `client` check the IP address of `demo_apache_1`
+- on `bro`, should note presence of this IP in `conn.log`
+- in MISP UI (`127.0.0.1:8040`), add an event with "Event info -\> Demo"  and add an attribute:
+	- Category: Network activity
+	- Type: ip-dst
+	- Value: `demo_apache_1` IP
+	- Check *for Intrusion Detection System*
+- From sidebar, issue *Publish Event* -\> *YES*
+- on `bro`, check that `/files/feeds/testdata.txt` now populates with this data (takes \> 5 secs)
+- on `client`, rerun `curl http://demo_apache_1/`
+- on `bro`, check that the `demo_apache_1` IP again appears in `conn.log`
 - on `bro`, there should also now be an `intel.log` file with relevant matches.
+- FOR ADDITIONAL DETAILING 
+	- Various examples of traffic analysis can be carried out using kibana
+	- Various combinations of apache/flask instances can be spun up to represent more "typical" traffic patterns
+
+[image-1]:	demonstrator-network-diagram.png

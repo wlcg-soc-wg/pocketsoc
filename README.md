@@ -47,9 +47,8 @@ Each container is configured to belong to a specific set of these:
 
 The router is then configured to route traffic between the client and apache/flask instances, mirroring the consequent packets to the bro node via the mirror network.
 
-A network diagram showing the configuration is given below
+A network diagram showing the configuration is given (here)[demonstrator-network-diagram.svg]
 
-![][image-1]
 ## Usage
 
 ### Quickstart
@@ -100,5 +99,3 @@ Steps to follow
 - FOR ADDITIONAL DETAILING 
 	- Various examples of traffic analysis can be carried out using kibana
 	- Various combinations of apache/flask instances can be spun up to represent more "typical" traffic patterns
-
-[image-1]: demonstrator-network-diagram.svg

@@ -47,19 +47,19 @@ services:
       - elasticsearch
 
   apache:
-    build: ./apache/
+    build: ./components/apache/
     restart: always
     networks:
       external:
 
   flask:
-    build: ./flask/
+    build: ./components/flask/
     restart: always
     networks:
       external:
 
   client:
-    build: ./client/
+    build: ./components/client/
     container_name: client
     hostname: client
     dns:
@@ -71,7 +71,7 @@ services:
         ipv4_address: 172.18.0.15
 
   bro:
-    build: ./bro/
+    build: ./components/bro/
     container_name: bro
     hostname: bro
     cap_add:
@@ -81,7 +81,7 @@ services:
         ipv4_address: 172.20.0.15
 
   router:
-    build: ./router/
+    build: ./components/router/
     container_name: router
     hostname: router
     cap_add:

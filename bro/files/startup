@@ -1,5 +1,7 @@
 #! /bin/bash
 
+sed -i "s/use_json = F/use_json = T/g" /opt/bro/share/bro/base/frameworks/logging/writers/ascii.bro
+
 /opt/bro/bin/broctl deploy
 /files/watchmisp.sh &
 /usr/share/filebeat/bin/filebeat -c /etc/filebeat/filebeat.yml -path.home /usr/share/filebeat -path.config /etc/filebeat -path.data /var/lib/filebeat -path.logs /var/log/filebeat &

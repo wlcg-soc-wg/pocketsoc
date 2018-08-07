@@ -23,7 +23,8 @@ The current containers used by this demonstrator are:
 
 - `misp-web` and `misp-db` are used from the misp-docker (XME edition) repo, part of the official MISP project, which is included as a submodule.
 - `elasticsearch`, `kibana` and `logstash` are used from the docker-elk repo, https://github.com/deviantony/docker-elk, which uses the official elastic docker containers. 
-- `apache` and `flask` are designed as sources of traffic (static and dynamic respectively) and are designed to scale to multiple instances.
+- \* `apache` and `flask` are designed as sources of traffic (static and dynamic respectively) and are designed to scale to multiple instances.
+
 ## Networks
 
 Three internal docker networks are used:

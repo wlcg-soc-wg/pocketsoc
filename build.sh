@@ -12,8 +12,8 @@ docker network create --subnet 172.20.0.0/16 mirror
 
 # Clean MISP data
 
-rm -rf ./misp-data
-mkdir -p ./misp-data/{misp,mysql}
+rm -rf ./volumes/{misp-web,misp-db}
+mkdir -p ./volumes/{misp-web,misp-db}
 
 # Configure logstash pipeline(s) and MISP
 

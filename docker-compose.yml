@@ -75,8 +75,8 @@ services:
     container_name: bro
     hostname: bro
     volumes:
-      - ./components/bro/opt/bro/share/bro/site/local.bro:/opt/bro/share/bro/site/local.bro:ro
-      - ./components/bro/etc/filebeat/filebeat.yml:/etc/filebeat/filebeat.yml:ro
+      - ./components/bro/config/opt/bro/share/bro/site/local.bro:/opt/bro/share/bro/site/local.bro:ro
+      - ./components/bro/config/etc/filebeat/filebeat.yml:/etc/filebeat/filebeat.yml:ro
     cap_add:
       - NET_ADMIN
     networks:

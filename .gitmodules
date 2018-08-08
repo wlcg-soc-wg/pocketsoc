@@ -1,6 +1,8 @@
 [submodule "misp-docker"]
 	path = misp-docker
 	url = https://github.com/MISP/misp-docker.git
+        ignore = dirty
 [submodule "docker-elk"]
 	path = docker-elk
 	url = https://github.com/deviantony/docker-elk.git
+        ignore = dirty

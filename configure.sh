@@ -11,7 +11,7 @@ CONFIGFILE="./data/misp-web/misp-configure.txt"
 
 sed -i.bak "/${TOFIND}/r ${CONFIGFILE}"  $FILETOMOD
 
-mkdir -p ./volumes/{elasticsearch,logstash,kibana}
+mkdir -p ./data/{elasticsearch,logstash,kibana}/config/
 
 # elastic
 
@@ -24,7 +24,3 @@ cp ./docker-elk/kibana/config/kibana.yml ./data/kibana/config/
 cp -R ./data/elasticsearch ./volumes/
 cp -R ./data/logstash ./volumes/
 cp -R ./data/kibana ./volumes/
-
-# bro
-
-cp -R ./data/bro ./volumes/

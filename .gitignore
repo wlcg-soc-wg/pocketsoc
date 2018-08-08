@@ -1,2 +1,5 @@
 volumes/*
 .Ulysses*
+data/elasticsearch/config/elasticsearch.yml
+data/logstash/config/logstash.yml
+data/kibana/config/kibana.yml

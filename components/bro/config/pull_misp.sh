@@ -1,6 +1,6 @@
 #! /bin/bash
 
-FEEDDIR="/files/feeds"
+FEEDDIR="/config/feeds"
 FEEDFILE=$FEEDDIR"/testdata.txt"
 
 mkdir -p $FEEDDIR

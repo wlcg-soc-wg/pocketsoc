@@ -7,7 +7,7 @@ mkdir -p ./volumes/{misp-web,misp-db}
 
 TOFIND="RUN sudo -u www-data cp -a \/var\/www\/MISP\/app\/Config\/config.default.php \/var\/www\/MISP\/app\/Config\/config.php"
 FILETOMOD="misp-docker/misp-web/Dockerfile"
-CONFIGFILE="./data/misp-configure.txt"
+CONFIGFILE="./data/misp-web/misp-configure.txt"
 
 sed -i.bak "/${TOFIND}/r ${CONFIGFILE}"  $FILETOMOD
 

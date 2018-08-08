@@ -1,2 +1,5 @@
 volumes/*
 .Ulysses*
+data/elasticsearch/*
+data/logstash/*
+data/kibana/*

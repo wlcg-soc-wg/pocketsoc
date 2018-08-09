@@ -1,8 +1,8 @@
-volumes/misp-web*
-volumes/misp-db*
-volumes/elasticsearch/config/elasticsearch.yml
-volumes/logstash/config/logstash.yml
-volumes/kibana/config/kibana.yml
+external/volumes/misp-web*
+external/volumes/misp-db*
+external/volumes/elasticsearch/config/elasticsearch.yml
+external/volumes/logstash/config/logstash.yml
+external/volumes/kibana/config/kibana.yml
 .Ulysses*
 data/elasticsearch/config/elasticsearch.yml
 data/logstash/config/logstash.yml

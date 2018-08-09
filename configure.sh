@@ -1,5 +1,13 @@
 #! /bin/bash
 
+# Prep submodules
+
+git submodule update --init
+
+# Create networks
+
+./tools/build-networks.sh
+
 # MISP
 
 ## Patch misp-web Dockerfile to personalise MISP config

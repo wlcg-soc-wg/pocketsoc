@@ -11,9 +11,10 @@ CONFIGFILE="./data/misp-web/misp-configure.txt"
 
 sed -i.bak "/${TOFIND}/r ${CONFIGFILE}"  $FILETOMOD
 
-mkdir -p ./data/{elasticsearch,logstash,kibana}/config/
-
 # elastic
+
+mkdir -p ./{data,volumes}/{elasticsearch,logstash,kibana}/config/
+mkdir -p ./volumes/logstash/pipeline/
 
 # Refresh core elastic config from submodule
 
@@ -21,6 +22,7 @@ cp ./docker-elk/elasticsearch/config/elasticsearch.yml ./data/elasticsearch/conf
 cp ./docker-elk/logstash/config/logstash.yml ./data/logstash/config/
 cp ./docker-elk/kibana/config/kibana.yml ./data/kibana/config/
 
-cp -R ./data/elasticsearch ./volumes/
-cp -R ./data/logstash ./volumes/
-cp -R ./data/kibana ./volumes/
+cp ./data/elasticsearch/config/elasticsearch.yml ./volumes/elasticsearch/config/elasticsearch.yml
+cp ./data/logstash/config/logstash.yml ./volumes/logstash/config/logstash.yml
+cp ./data/logstash/pipeline/logstash.conf ./volumes/logstash/pipeline/logstash.conf
+cp ./data/kibana/config/kibana.yml ./volumes/kibana/config/kibana.yml

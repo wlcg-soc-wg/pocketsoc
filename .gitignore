@@ -1,4 +1,5 @@
-volumes/*
+volumes/misp-web*
+volumes/misp-db*
 .Ulysses*
 data/elasticsearch/config/elasticsearch.yml
 data/logstash/config/logstash.yml

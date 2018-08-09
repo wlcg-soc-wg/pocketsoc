@@ -6,7 +6,7 @@ git submodule update --init
 
 # Create networks
 
-./build-networks.sh
+./tools/build-networks.sh
 
 # Configure logstash pipeline(s) and MISP
 

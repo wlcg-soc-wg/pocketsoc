@@ -27,6 +27,13 @@ filebeat.prospectors:
     type: "bro-http"
   fields_under_root: true
 
+- input_type: log
+  paths:
+    - "/opt/bro/logs/current/ssh.log"
+  fields:
+    type: "bro-ssh"
+  fields_under_root: true
+
 output.logstash:
   # The Logstash hosts
   hosts: ["172.20.0.51:5044"]

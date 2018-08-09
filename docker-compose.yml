@@ -58,6 +58,12 @@ services:
     networks:
       external:
 
+  ssh:
+    build: ./components/ssh/
+    restart: always
+    networks:
+      external:
+
   client:
     build: ./components/client/
     container_name: client

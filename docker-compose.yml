@@ -4,11 +4,11 @@ services:
 
   elasticsearch:
     build:
-      context: ./docker-elk/elasticsearch/
+      context: ./external/docker-elk/elasticsearch/
     container_name: elasticsearch
     hostname: elasticsearch
     volumes:
-      - ./volumes/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - ./external/volumes/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
@@ -17,12 +17,12 @@ services:
 
   logstash:
     build:
-      context: ./docker-elk/logstash/
+      context: ./external/docker-elk/logstash/
     container_name: logstash
     hostname: logstash
     volumes:
-      - ./volumes/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ./volumes/logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - ./external/volumes/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./external/volumes/logstash/pipeline:/usr/share/logstash/pipeline:ro
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
@@ -33,11 +33,11 @@ services:
 
   kibana:
     build:
-      context: ./docker-elk/kibana/
+      context: ./external/docker-elk/kibana/
     container_name: kibana
     hostname: kibana
     volumes:
-      - ./volumes/kibana/config/:/usr/share/kibana/config:ro
+      - ./external/volumes/kibana/config/:/usr/share/kibana/config:ro
     ports:
       - "8060:5601"
     networks:
@@ -98,7 +98,7 @@ services:
         ipv4_address: 172.19.0.100
 
   misp-web:
-    build: misp-docker/misp-web
+    build: external/misp-docker/misp-web
     container_name: misp-web
     hostname: misp-web
     depends_on:
@@ -113,7 +113,7 @@ services:
     ports:
       - 8040:80
     volumes:
-      - ./volumes/misp-web:/var/www/MISP
+      - ./external/volumes/misp-web:/var/www/MISP
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_MISP_PASSWORD=misp
@@ -126,7 +126,7 @@ services:
 
   misp-db:
     build:
-      context: misp-docker/misp-db
+      context: external/misp-docker/misp-db
       args:
         MYSQL_MISP_PASSWORD: misp
     container_name: misp-db
@@ -137,7 +137,7 @@ services:
       mirror:
         ipv4_address: 172.20.0.21
     volumes:
-      - ./volumes/misp-db:/var/lib/mysql
+      - ./external/volumes/misp-db:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
 

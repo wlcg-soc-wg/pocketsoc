@@ -4,6 +4,44 @@
 
 A test, **non-production** SOC demonstrator, intended to track the lifecycle of an event. 
 
+## Quickstart
+
+- Clone repo
+- Inside repo, run `configure.sh` to 
+	- pull in submodules
+	- set up the networking
+	- patch the misp-web Dockerfile to personalise our instance
+	- set up the Docker volumes for the submodules
+		- misp-web
+		- misp-db
+		- elasticsearch
+		- logstash
+		- kibana
+- Run `docker-compose up`
+- Build will take some time initially if starting from scratch
+- Following build, containers will be automatically started
+- Visit `127.0.0.1:8040` to see MISP login page
+	  - Log in with `admin@admin.test:admin` and change password
+          - Administration ->
+          - List Users ->
+          - Copy `Authkey` for `admin`
+          - In repo directory, run `tools/updateauthkey.sh COPIEDKEY` to update the key used by `bro` to pull MISP data
+- Visit `127.0.0.1:8060` to see Kibana front page
+	-  After a brief wait to allow Elasticsearch to ingest data, set up indexes
+		- Discover -\>
+		- `Index pattern`: logstash\*
+		- Next step -\>
+		- Select `@timestamp` from dropdown menu
+		- Create index pattern -\>
+		- Discover -\>
+		- For example, choose fields of interest
+- Use  `docker exec -it client bash` to access the client container and access the traffic sources. 
+
+### Troubleshooting
+
+- If containers don't start properly, `Ctrl-C` to stop containers, and re-run `docker-compose up` (particularly if you see error messages like "could not connect to database")
+- Make sure you're in the `docker-soc-demonstrator` directory proper - there are other `docker-compose.yml` files in the `misp-docker` subdirectory (the XME misp-docker repo) and `docker-elk` subdirectory, but we override this with different network settings to make our cluster work.
+
 ## Components
 
 The current containers used by this demonstrator are:
@@ -65,47 +103,7 @@ The router is then configured to route traffic between the client and apache/fla
 
 A network diagram showing the configuration is given [here][1]
 
-## Usage
-
-### Quickstart
-
-- Clone repo
-- Inside repo, run `configure.sh` to 
-	- pull in submodules
-	- set up the networking
-	- patch the misp-web Dockerfile to personalise our instance
-	- set up the Docker volumes for the submodules
-		- misp-web
-		- misp-db
-		- elasticsearch
-		- logstash
-		- kibana
-- Run `docker-compose up`
-- Build will take some time initially if starting from scratch
-- Following build, containers will be automatically started
-- Visit `127.0.0.1:8040` to see MISP login page
-	  - Log in with `admin@admin.test:admin` and change password
-          - Administration ->
-          - List Users ->
-          - Copy `Authkey` for `admin`
-          - In repo directory, run `tools/updateauthkey.sh COPIEDKEY` to update the key used by `bro` to pull MISP data
-- Visit `127.0.0.1:8060` to see Kibana front page
-	-  After a brief wait to allow Elasticsearch to ingest data, set up indexes
-		- Discover -\>
-		- `Index pattern`: logstash\*
-		- Next step -\>
-		- Select `@timestamp` from dropdown menu
-		- Create index pattern -\>
-		- Discover -\>
-		- For example, choose fields of interest
-- Use  `docker exec -it client bash` to access the client container and access the traffic sources. 
-
-### Troubleshooting
-
-- If containers don't start properly, `Ctrl-C` to stop containers, and re-run `docker-compose up` (particularly if you see error messages like "could not connect to database")
-- Make sure you're in the `docker-soc-demonstrator` directory proper - there are other `docker-compose.yml` files in the `misp-docker` subdirectory (the XME misp-docker repo) and `docker-elk` subdirectory, but we override this with different network settings to make our cluster work.
-
-### Demo workflow
+## Demo workflow
 
 An initial demo could include showing that network traffic, where one endpoint is identified in a MISP event, can 
 

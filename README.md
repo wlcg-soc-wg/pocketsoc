@@ -1,4 +1,4 @@
-# docker-soc-demonstrator
+# DockerSOC
 
 ## Introduction
 

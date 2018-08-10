@@ -10,21 +10,27 @@ The current containers used by this demonstrator are:
 
 ### Interactive
 - client
+
 ### Data/Traffic sources
 - apache\*
 - flask\*
 - ssh\*
+
 ### Infrastructure
 - router
+
 ### SOC (IDS)
 - bro
+
 ### SOC (Threat Intelligence)
 - misp-web
 - misp-db
+
 ### SOC (Analytics)
 - elasticsearch
 - logstash
 - kibana
+
 ### SOC (Alerting)
 - elastalert
 
@@ -94,7 +100,7 @@ A network diagram showing the configuration is given [here][1]
 		- For example, choose fields of interest
 - Use  `docker exec -it client bash` to access the client container and access the traffic sources. 
 
-#### Troubleshooting
+### Troubleshooting
 
 - If containers don't start properly, `Ctrl-C` to stop containers, and re-run `docker-compose up` (particularly if you see error messages like "could not connect to database")
 - Make sure you're in the `docker-soc-demonstrator` directory proper - there are other `docker-compose.yml` files in the `misp-docker` subdirectory (the XME misp-docker repo) and `docker-elk` subdirectory, but we override this with different network settings to make our cluster work.

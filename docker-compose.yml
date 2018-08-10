@@ -50,6 +50,8 @@ services:
     build: ./components/elastalert/
     container_name: elastalert
     hostname: elastalert
+    volumes:
+      - ./components/elastalert/config/:/config
     restart: always
     networks:
       mirror:

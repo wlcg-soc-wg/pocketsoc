@@ -1,0 +1,12 @@
+es_host: elasticsearch
+name: DockerSOC demo
+type: new_term
+index: logstash-*
+fields:
+ - "id.resp_h"
+
+filter:
+- term:
+    type.keyword: "bro-intel"
+
+# Insert alert details here

@@ -1,0 +1,7 @@
+#! /bin/bash
+
+elastalert-create-index --config /config/config.yaml
+
+elastalert --verbose --rule /config/rules/new_term.yaml --config /config/config.yaml
+
+tail -f /dev/null

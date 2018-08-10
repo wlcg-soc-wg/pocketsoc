@@ -8,6 +8,6 @@ RUN yum install -y net-tools tcpdump iptables lsof iproute bind-utils git epel-r
     pip install "elasticsearch>=5.0.0" && \
     yum update -y
 
-ADD ./files /files
+ADD ./config /config
 
-CMD ["/files/startup"]
+CMD ["/config/startup"]

@@ -55,6 +55,8 @@ services:
     restart: always
     networks:
       mirror:
+    depends_on:
+      - elasticsearch
 
   apache:
     build: ./components/apache/

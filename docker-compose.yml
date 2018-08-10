@@ -46,6 +46,14 @@ services:
     depends_on:
       - elasticsearch
 
+  elastalert:
+    build: ./components/elastalert/
+    container_name: elastalert
+    hostname: elastalert
+    restart: always
+    networks:
+      mirror:
+
   apache:
     build: ./components/apache/
     restart: always

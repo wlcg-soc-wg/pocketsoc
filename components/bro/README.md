@@ -10,4 +10,4 @@ Intrusion Detection System component.
 
 ## Additional config
 
-- configured following wlcg-soc-wg (documentation)[https://wlcg-soc-wg-doc.web.cern.ch/wlcg-soc-wg-doc/bro/] 
+- configured following wlcg-soc-wg [documentation](https://wlcg-soc-wg-doc.web.cern.ch/wlcg-soc-wg-doc/bro/)

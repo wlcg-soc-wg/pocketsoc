@@ -47,7 +47,7 @@ A test, **non-production** SOC demonstrator, intended to track the lifecycle of 
 The current containers used by this demonstrator are:
 
 ### Interactive
-- client
+- (client)[components/client/README.md]
 
 ### Data/Traffic sources
 - apache\*

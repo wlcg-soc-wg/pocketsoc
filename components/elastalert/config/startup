@@ -1,7 +1,18 @@
 #! /bin/bash
 
+sleeptime=5
+
+while ! nc -z -w 1 172.20.0.50 9200; do
+    echo "Not connected to elasticsearch, sleeping for $sleeptime seconds..."
+    sleep $sleeptime
+done
+
+echo "Connected to elasticsearch, generating initial index..."
 elastalert-create-index --config /config/config.yaml
 
+echo "Starting elastalert..."
 elastalert --verbose --rule /config/rules/new_term.yaml --config /config/config.yaml
+
+echo "Done"
 
 tail -f /dev/null

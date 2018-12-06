@@ -5,6 +5,8 @@ services:
   elasticsearch:
     build:
       context: ./external/docker-elk/elasticsearch/
+      args:
+        ELK_VERSION: '6.5.2'
     container_name: elasticsearch
     hostname: elasticsearch
     volumes:
@@ -18,6 +20,8 @@ services:
   logstash:
     build:
       context: ./external/docker-elk/logstash/
+      args:
+        ELK_VERSION: '6.5.2'
     container_name: logstash
     hostname: logstash
     volumes:
@@ -34,6 +38,8 @@ services:
   kibana:
     build:
       context: ./external/docker-elk/kibana/
+      args:
+        ELK_VERSION: '6.5.2'
     container_name: kibana
     hostname: kibana
     volumes:

@@ -28,7 +28,7 @@ services:
       - ./external/volumes/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./external/volumes/logstash/pipeline:/usr/share/logstash/pipeline:ro
     environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+      LS_JAVA_OPTS: "-Xmx2g -Xms2g"
     networks:
       mirror:
         ipv4_address: 172.20.0.51

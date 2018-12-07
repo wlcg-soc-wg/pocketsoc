@@ -2,4 +2,9 @@
 
 /files/routing
 /usr/sbin/dnsmasq -k
+
+machineid=`uuidgen`
+
+/usr/sbin/hsflowd -u $machineid -d -d -d -f /files/hsflowd.conf
+
 tail -f /dev/null

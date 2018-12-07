@@ -6,3 +6,6 @@
 	path = external/docker-elk
 	url = https://github.com/deviantony/docker-elk.git
         ignore = dirty
+[submodule "external/elastiflow"]
+	path = external/elastiflow
+	url = https://github.com/robcowart/elastiflow

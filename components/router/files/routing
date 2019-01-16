@@ -16,6 +16,12 @@ iptables -t nat -A POSTROUTING -o $external -j MASQUERADE
 iptables -A FORWARD -i $external -o $internal -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -A FORWARD -i $internal -o $external -j ACCEPT
 
+# Configure NFLOG
+
+iptables -t mangle -A PREROUTING -j NFLOG --nflog-group 10
+iptables -t mangle -A PREROUTING -j NFLOG --nflog-group 10
+iptables -t mangle -A POSTROUTING -j NFLOG --nflog-group 10
+
 # Configure mirroring
 
 iptables -t mangle -A PREROUTING -j TEE -i eth0 --gateway bro.mirror

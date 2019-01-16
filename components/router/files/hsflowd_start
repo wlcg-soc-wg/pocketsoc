@@ -1,0 +1,1 @@
+/usr/sbin/hsflowd -u `uuidgen` -d -d -f /files/hsflowd.conf

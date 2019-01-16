@@ -6,7 +6,7 @@ services:
     build:
       context: ./external/docker-elk/elasticsearch/
       args:
-        ELK_VERSION: '6.5.2'
+        ELK_VERSION: '6.4.3'
     container_name: elasticsearch
     hostname: elasticsearch
     volumes:
@@ -17,18 +17,18 @@ services:
       mirror:
         ipv4_address: 172.20.0.50
 
-  logstash:
+  logstash-bro:
     build:
       context: ./external/docker-elk/logstash/
       args:
-        ELK_VERSION: '6.5.2'
-    container_name: logstash
-    hostname: logstash
+        ELK_VERSION: '6.4.3'
+    container_name: logstash-bro
+    hostname: logstash-bro
     volumes:
-      - ./external/volumes/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ./external/volumes/logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - ./external/volumes/logstash-bro/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./external/volumes/logstash-bro/pipeline:/usr/share/logstash/pipeline:ro
     environment:
-      LS_JAVA_OPTS: "-Xmx2g -Xms2g"
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
       mirror:
         ipv4_address: 172.20.0.51
@@ -39,7 +39,7 @@ services:
     build:
       context: ./external/docker-elk/kibana/
       args:
-        ELK_VERSION: '6.5.2'
+        ELK_VERSION: '6.4.3'
     container_name: kibana
     hostname: kibana
     volumes:
@@ -52,17 +52,38 @@ services:
     depends_on:
       - elasticsearch
 
-  elastalert:
-    build: ./components/elastalert/
-    container_name: elastalert
-    hostname: elastalert
+  logstash-flow:
+    build:
+      context: ./external/docker-elk/logstash-flow/
+      args:
+        ELK_VERSION: '6.4.3'
+    container_name: logstash-flow
+    hostname: logstash-flow
     volumes:
-      - ./components/elastalert/config/:/config
-    restart: always
+      - ./external/volumes/logstash-flow/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./external/volumes/logstash-flow/pipeline:/usr/share/logstash/pipeline:ro
+      - ./external/volumes/logstash-flow/elastiflow:/usr/share/logstash/elastiflow:ro
+      - ./external/volumes/logstash-flow/profile.d/elastiflow.sh:/etc/profile.d/elastiflow.sh:ro
+      - ./external/volumes/logstash-flow/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
+    environment:
+      LS_JAVA_OPTS: "-Xmx2g -Xms2g"
     networks:
       mirror:
+        ipv4_address: 172.20.0.53
     depends_on:
       - elasticsearch
+
+  #elastalert:
+  #  build: ./components/elastalert/
+  #  container_name: elastalert
+  #  hostname: elastalert
+  #  volumes:
+  #    - ./components/elastalert/config/:/config
+  #  restart: always
+  #  networks:
+  #    mirror:
+  #  depends_on:
+  #    - elasticsearch
 
   apache:
     build: ./components/apache/
@@ -86,10 +107,12 @@ services:
     build: ./components/client/
     container_name: client
     hostname: client
+    volumes:
+      - ./components/client/files/:/files
     dns:
       - "172.18.0.100"
     cap_add:
-      - NET_ADMIN
+      - NET_ADMIN  
     networks:
       internal:
         ipv4_address: 172.18.0.15
@@ -111,6 +134,8 @@ services:
     build: ./components/router/
     container_name: router
     hostname: router
+    volumes:
+      - ./components/router/files/:/files
     cap_add:
       - NET_ADMIN
     networks:
@@ -120,6 +145,8 @@ services:
         ipv4_address: 172.18.0.100
       external:
         ipv4_address: 172.19.0.100
+    depends_on:
+      - kibana
 
   misp-web:
     build: external/misp-docker/misp-web

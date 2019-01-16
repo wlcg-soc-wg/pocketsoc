@@ -18,6 +18,18 @@ CONFIGFILE="./components/misp-web/misp-configure.txt"
 
 sed -i.bak "/${TOFIND}/r ${CONFIGFILE}"  $FILETOMOD
 
+## Patch logstash with Elastiflow config
+
+SOURCEDIR="external/docker-elk/logstash"
+DESTDIR="external/docker-elk/logstash-flow"
+
+cp -r $SOURCEDIR $DESTDIR
+
+FILETOMOD="external/docker-elk/logstash-flow/Dockerfile"
+CONFIGFILE="./components/logstash-flow/logstash-configure.txt"
+
+cat $CONFIGFILE >> $FILETOMOD
+
 ## Make sure volume directories are in place
 
 mkdir -p ./external/volumes/{misp-web,misp-db}
@@ -29,3 +41,7 @@ mkdir -p ./external/volumes/{elasticsearch,logstash,kibana}/config/
 cp ./external/docker-elk/elasticsearch/config/elasticsearch.yml ./external/volumes/elasticsearch/config/
 cp ./external/docker-elk/logstash/config/logstash.yml ./external/volumes/logstash/config/
 cp ./external/docker-elk/kibana/config/kibana.yml ./external/volumes/kibana/config/
+
+# Refresh core elastiflow config from submodule
+
+cp -R ./external/elastiflow/logstash/elastiflow ./external/volumes/logstash-flow/

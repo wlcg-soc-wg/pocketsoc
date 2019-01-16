@@ -1,10 +1,29 @@
 #! /bin/bash
 
+echo "Applying routing rules"
+
 /files/routing
-/usr/sbin/dnsmasq -k
+
+echo "Inserting elastiflow patterns"
+curl -X POST http://172.20.0.52:5601/api/saved_objects/index-pattern/elastiflow-* -H "Content-Type: application/json" -H "kbn-xsrf: true" -d @/files/kibana/elastiflow.index_pattern.json
+
+
+(
+echo "Starting up DNS proxy"
+/usr/sbin/dnsmasq -k &
+)
+
+echo "Running hsflowd"
+while [ `iptables -L -n -t mangle | grep nflog | wc -l` -eq 0 ]; do
+    echo "Waiting for firewall rules"
+    sleep 10
+done
+echo "Firewall rules in place"
 
 machineid=`uuidgen`
+/usr/sbin/hsflowd -u $machineid -f /files/hsflowd.conf &
 
-/usr/sbin/hsflowd -u $machineid -d -d -d -f /files/hsflowd.conf
+echo Startup complete
+
 
 tail -f /dev/null

@@ -1,5 +1,9 @@
 #! /bin/bash
 
+# Prep log dir
+
+mkdir -p ./log
+
 # Prep submodules
 
 git submodule update --init

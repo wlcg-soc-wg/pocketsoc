@@ -22,6 +22,16 @@ CONFIGFILE="./components/misp-web/misp-configure.txt"
 
 sed -i.bak "/${TOFIND}/r ${CONFIGFILE}"  $FILETOMOD
 
+TOFIND="^RUN pear install Crypt_GPG >>\/tmp\/install.log"
+REPLACEWITH="RUN git clone https:\/\/github.com\/pear\/Crypt_GPG.git \&\& cd Crypt_GPG \&\& pear package"
+
+sed -i'' -e "s/${TOFIND}/${REPLACEWITH}/" $FILETOMOD
+
+TOFIND="^RUN pear install Net_GeoIP >>\/tmp\/install.log"
+REPLACEWITH="RUN git clone https:\/\/github.com\/pear\/Net_GeoIP.git \&\& cd Net_GeoIP \&\& pear package"
+
+sed -i'' -e "s/${TOFIND}/${REPLACEWITH}/" $FILETOMOD
+
 ## Patch logstash with Elastiflow config
 
 SOURCEDIR="external/docker-elk/logstash"

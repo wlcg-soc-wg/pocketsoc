@@ -17,7 +17,7 @@ git submodule update --init
 ## Patch misp-web Dockerfile to personalise MISP config
 
 TOFIND="RUN sudo -u www-data cp -a \/var\/www\/MISP\/app\/Config\/config.default.php \/var\/www\/MISP\/app\/Config\/config.php"
-FILETOMOD="external/misp-docker/misp-web/Dockerfile"
+FILETOMOD="repos/misp-docker/misp-web/Dockerfile"
 CONFIGFILE="./components/misp-web/misp-configure.txt"
 
 sed -i.bak "/${TOFIND}/r ${CONFIGFILE}"  $FILETOMOD
@@ -34,28 +34,28 @@ sed -i'' -e "s/${TOFIND}/${REPLACEWITH}/" $FILETOMOD
 
 ## Patch logstash with Elastiflow config
 
-SOURCEDIR="external/docker-elk/logstash"
-DESTDIR="external/docker-elk/logstash-flow"
+SOURCEDIR="repos/docker-elk/logstash"
+DESTDIR="repos/docker-elk/logstash-flow"
 
 cp -r $SOURCEDIR $DESTDIR
 
-FILETOMOD="external/docker-elk/logstash-flow/Dockerfile"
+FILETOMOD="repos/docker-elk/logstash-flow/Dockerfile"
 CONFIGFILE="./components/logstash-flow/logstash-configure.txt"
 
 cat $CONFIGFILE >> $FILETOMOD
 
 ## Make sure volume directories are in place
 
-mkdir -p ./external/volumes/{misp-web,misp-db}
+mkdir -p ./volumes/{misp-web,misp-db}
  
 # Refresh core elastic config from submodule
 
-mkdir -p ./external/volumes/{elasticsearch,logstash,kibana}/config/
+mkdir -p ./volumes/{elasticsearch,logstash,kibana}/config/
 
-cp ./external/docker-elk/elasticsearch/config/elasticsearch.yml ./external/volumes/elasticsearch/config/
-cp ./external/docker-elk/logstash/config/logstash.yml ./external/volumes/logstash/config/
-cp ./external/docker-elk/kibana/config/kibana.yml ./external/volumes/kibana/config/
+cp ./repos/docker-elk/elasticsearch/config/elasticsearch.yml ./volumes/elasticsearch/config/
+cp ./repos/docker-elk/logstash/config/logstash.yml ./volumes/logstash/config/
+cp ./repos/docker-elk/kibana/config/kibana.yml ./volumes/kibana/config/
 
 # Refresh core elastiflow config from submodule
 
-cp -R ./external/elastiflow/logstash/elastiflow ./external/volumes/logstash-flow/
+cp -R ./repos/elastiflow/logstash/elastiflow ./volumes/logstash-flow/

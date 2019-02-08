@@ -4,13 +4,13 @@ services:
 
   elasticsearch:
     build:
-      context: ./external/docker-elk/elasticsearch/
+      context: ./repos/docker-elk/elasticsearch/
       args:
         ELK_VERSION: '6.4.3'
     container_name: elasticsearch
     hostname: elasticsearch
     volumes:
-      - ./external/volumes/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - ./volumes/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
@@ -19,14 +19,14 @@ services:
 
   logstash-bro:
     build:
-      context: ./external/docker-elk/logstash/
+      context: ./repos/docker-elk/logstash/
       args:
         ELK_VERSION: '6.4.3'
     container_name: logstash-bro
     hostname: logstash-bro
     volumes:
-      - ./external/volumes/logstash-bro/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ./external/volumes/logstash-bro/pipeline:/usr/share/logstash/pipeline:ro
+      - ./volumes/logstash-bro/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./volumes/logstash-bro/pipeline:/usr/share/logstash/pipeline:ro
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
@@ -37,13 +37,13 @@ services:
 
   kibana:
     build:
-      context: ./external/docker-elk/kibana/
+      context: ./repos/docker-elk/kibana/
       args:
         ELK_VERSION: '6.4.3'
     container_name: kibana
     hostname: kibana
     volumes:
-      - ./external/volumes/kibana/config/:/usr/share/kibana/config:ro
+      - ./volumes/kibana/config/:/usr/share/kibana/config:ro
     ports:
       - "8060:5601"
     networks:
@@ -54,17 +54,17 @@ services:
 
   logstash-flow:
     build:
-      context: ./external/docker-elk/logstash-flow/
+      context: ./repos/docker-elk/logstash-flow/
       args:
         ELK_VERSION: '6.4.3'
     container_name: logstash-flow
     hostname: logstash-flow
     volumes:
-      - ./external/volumes/logstash-flow/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ./external/volumes/logstash-flow/pipeline:/usr/share/logstash/pipeline:ro
-      - ./external/volumes/logstash-flow/elastiflow:/usr/share/logstash/elastiflow:ro
-      - ./external/volumes/logstash-flow/profile.d/elastiflow.sh:/etc/profile.d/elastiflow.sh:ro
-      - ./external/volumes/logstash-flow/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
+      - ./volumes/logstash-flow/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./volumes/logstash-flow/pipeline:/usr/share/logstash/pipeline:ro
+      - ./volumes/logstash-flow/elastiflow:/usr/share/logstash/elastiflow:ro
+      - ./volumes/logstash-flow/profile.d/elastiflow.sh:/etc/profile.d/elastiflow.sh:ro
+      - ./volumes/logstash-flow/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
     environment:
       LS_JAVA_OPTS: "-Xmx2g -Xms2g"
     networks:
@@ -149,7 +149,7 @@ services:
       - kibana
 
   misp-web:
-    build: external/misp-docker/misp-web
+    build: repos/misp-docker/misp-web
     container_name: misp-web
     hostname: misp-web
     depends_on:
@@ -164,7 +164,7 @@ services:
     ports:
       - 8040:80
     volumes:
-      - ./external/volumes/misp-web:/var/www/MISP
+      - ./volumes/misp-web:/var/www/MISP
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_MISP_PASSWORD=misp
@@ -177,7 +177,7 @@ services:
 
   misp-db:
     build:
-      context: external/misp-docker/misp-db
+      context: repos/misp-docker/misp-db
       args:
         MYSQL_MISP_PASSWORD: misp
     container_name: misp-db
@@ -188,7 +188,7 @@ services:
       mirror:
         ipv4_address: 172.20.0.21
     volumes:
-      - ./external/volumes/misp-db:/var/lib/mysql
+      - ./volumes/misp-db:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
 

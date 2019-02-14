@@ -1,5 +1,7 @@
 #! /bin/bash
 
+SOCDIR=`pwd`
+
 scale=$1
 
 logfile=$SOCDIR"/log/run.log"

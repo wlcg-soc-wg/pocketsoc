@@ -1,8 +1,10 @@
 #! /bin/bash
 
+prefix=$1
+
 echo "Prepare log directory..."
 
-mkdir -p ./log
+mkdir -p $prefix/log
 
 echo "Prepare submodules..."
 
@@ -10,7 +12,7 @@ git submodule update --init
 
 echo "Create networks..."
 
-./tools/build-networks.sh
+$prefix/tools/build-networks.sh
 
 # MISP
 
@@ -18,7 +20,7 @@ echo "Patch misp-web Dockerfile to personalise MISP config..."
 
 TOFIND="RUN sudo -u www-data cp -a \/var\/www\/MISP\/app\/Config\/config.default.php \/var\/www\/MISP\/app\/Config\/config.php"
 FILETOMOD="repos/misp-docker/misp-web/Dockerfile"
-CONFIGFILE="./components/misp-web/misp-configure.txt"
+CONFIGFILE="$prefix/components/misp-web/misp-configure.txt"
 
 sed -i.bak "/${TOFIND}/r ${CONFIGFILE}"  $FILETOMOD
 
@@ -40,22 +42,22 @@ DESTDIR="repos/docker-elk/logstash-flow"
 cp -r $SOURCEDIR $DESTDIR
 
 FILETOMOD="repos/docker-elk/logstash-flow/Dockerfile"
-CONFIGFILE="./components/logstash-flow/logstash-configure.txt"
+CONFIGFILE="$prefix/components/logstash-flow/logstash-configure.txt"
 
 cat $CONFIGFILE >> $FILETOMOD
 
 echo "Make sure volume directories are in place..."
 
-mkdir -p ./volumes/{misp-web,misp-db}
+mkdir -p $prefix/volumes/{misp-web,misp-db}
  
 echo "Refresh core elastic config from submodule..."
 
-mkdir -p ./volumes/{elasticsearch,logstash,kibana}/config/
+mkdir -p $prefix/volumes/{elasticsearch,logstash,kibana}/config/
 
-cp ./repos/docker-elk/elasticsearch/config/elasticsearch.yml ./volumes/elasticsearch/config/
-cp ./repos/docker-elk/logstash/config/logstash.yml ./volumes/logstash/config/
-cp ./repos/docker-elk/kibana/config/kibana.yml ./volumes/kibana/config/
+cp $prefix/repos/docker-elk/elasticsearch/config/elasticsearch.yml $prefix/volumes/elasticsearch/config/
+cp $prefix/repos/docker-elk/logstash/config/logstash.yml $prefix/volumes/logstash/config/
+cp $prefix/repos/docker-elk/kibana/config/kibana.yml $prefix/volumes/kibana/config/
 
 echo "Refresh core elastiflow config from submodule..."
 
-cp -R ./repos/elastiflow/logstash/elastiflow ./volumes/logstash-flow/
+cp -R $prefix/repos/elastiflow/logstash/elastiflow $prefix/volumes/logstash-flow/

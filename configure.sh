@@ -8,6 +8,8 @@ mkdir -p $prefix/log
 
 echo "Prepare submodules..."
 
+cd $prefix
+
 git submodule update --init
 
 echo "Create networks..."

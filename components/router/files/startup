@@ -13,15 +13,15 @@ echo "Starting up DNS proxy"
 /usr/sbin/dnsmasq -k &
 )
 
-echo "Running hsflowd"
-while [ `iptables -L -n -t mangle | grep nflog | wc -l` -eq 0 ]; do
-    echo "Waiting for firewall rules"
-    sleep 10
-done
-echo "Firewall rules in place"
-
-machineid=`uuidgen`
-/usr/sbin/hsflowd -u $machineid -f /files/hsflowd.conf &
+#echo "Running hsflowd"
+#while [ `iptables -L -n -t mangle | grep nflog | wc -l` -eq 0 ]; do
+#    echo "Waiting for firewall rules"
+#    sleep 10
+#done
+#echo "Firewall rules in place"
+#
+#machineid=`uuidgen`
+#/usr/sbin/hsflowd -u $machineid -f /files/hsflowd.conf &
 
 echo Startup complete
 

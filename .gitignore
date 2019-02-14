@@ -1,3 +1,4 @@
+.DS_Store
 volumes/misp-web*
 volumes/misp-db*
 volumes/elasticsearch/config/elasticsearch.yml

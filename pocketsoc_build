@@ -4,7 +4,7 @@ scale=$1
 
 logfile=$SOCDIR"/log/build.log"
 
-$SOCDIR/configure.sh
+$SOCDIR/configure.sh $SOCDIR
 
 echo "Starting up, see $logfile"
 

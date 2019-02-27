@@ -118,7 +118,9 @@ Each container is configured to belong to a specific set of these:
 
 The router is then configured to route traffic between the client and apache/flask instances, mirroring the consequent packets to the bro node via the mirror network.
 
-A network diagram showing the configuration is given [here][1]
+A network diagram showing the configuration is shown below.
+
+![Network diagram](demonstrator-network-diagram.svg)
 
 ## Helper scripts
 

@@ -18,6 +18,7 @@ The VM has the following configuration by default.
 - USB disabled
 
 In addition, 3 ports are forwarded by default:
+
 | Host IP:port   | Guest IP:port  | Description |
 | -------------- | -------------- | ----------- |
 | 127.0.0.1:8060 | 10.0.2.15:8060 | Kibana      |

@@ -30,10 +30,25 @@ Access to the VM once running is via `ssh -p 2222 pocketsoc@localhost`. Credenti
 - Username: `pocketsoc`
 - Password: `pocketsoc`
 
-## On startup
+## On startup and service control
 
 On startup, the VM will autostart the pocketsoc docker cluster via `systemd`. Check the status of the service using
 
 ```
 systemtl status pocketsoc
 ```
+
+To restart the service, currently use
+
+```
+systemctl stop pocketsoc
+systemctl start pocketsoc
+```
+
+It takes some time for the individual services to start up - their progress can be seen using `pocketsoc_log` which will give the output of `docker-compose`
+
+## Installation directory
+
+All of the configuration can be found in `development/PocketSOC`; this is a clone of the v1 configuration.
+
+

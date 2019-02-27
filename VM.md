@@ -1,3 +1,39 @@
 # Instructions for VM installation
 
-To follow
+## Introduction
+
+This quickstart guide covers the `pocketsoc_v1` VM. This contains a prebuilt version of PocketSOC v1, with docker images already in place.
+
+## Requirements
+
+- Tested on VirtualBox v6
+
+## Configuration
+
+The VM has the following configuration by default. 
+- 2 cores
+- 1 network port (NAT)
+- 8GB RAM
+  - Startup has been tested with 4GB, but this option has not been extensivelt tested
+- USB disabled
+
+In addition, 3 ports are forwarded by default:
+| Host IP:port   | Guest IP:port  | Description |
+| -------------- | -------------- | ----------- |
+| 127.0.0.1:8060 | 10.0.2.15:8060 | Kibana      |
+| 127.0.0.1:8040 | 10.0.2.15:8060 | MISP        |
+| 127.0.0.1:2222 | 10.0.2.15:22   | SSH         |
+
+## Access
+
+Access to the VM once running is via `ssh -p 2222 pocketsoc@localhost`. Credentials:
+- Username: `pocketsoc`
+- Password: `pocketsoc`
+
+## On startup
+
+On startup, the VM will autostart the pocketsoc docker cluster via `systemd`. Check the status of the service using
+
+```
+systemtl status pocketsoc
+```

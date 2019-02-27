@@ -27,11 +27,11 @@ The individual steps and scripts used in this guide will be explored in more det
       - this will take some time initially if starting from scratch
 - Following build, containers will be automatically started
 - Visit `127.0.0.1:8040` to see MISP login page
-	  - Log in with `admin@admin.test:admin` and change password
-          - Administration ->
-          - List Users ->
-          - Copy `Authkey` for `admin`
-          - In repo directory, run `tools/updateauthkey.sh COPIEDKEY` to update the key used by `bro` to pull MISP data
+	- Log in with `admin@admin.test:admin` and change password
+      - Administration ->
+      - List Users ->
+      - Copy `Authkey` for `admin`
+      - In repo directory, run `tools/updateauthkey.sh COPIEDKEY` to update the key used by `bro` to pull MISP data
 - Visit `127.0.0.1:8060` to see Kibana front page
 	-  After a brief wait to allow Elasticsearch to ingest data, set up indexes
 		- Discover -\>

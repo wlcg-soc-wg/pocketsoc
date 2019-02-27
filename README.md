@@ -4,6 +4,8 @@
 
 A test, **non-production** SOC demonstrator, intended to track the lifecycle of an event. 
 
+Please note - these instructions are currently being updated to match the newest version of the configuration; this message will be removed once that has happened.
+
 ## Quickstart
 
 - Clone repo

@@ -6,19 +6,25 @@ A test, **non-production** SOC demonstrator, intended to track the lifecycle of 
 
 ## Quickstart
 
+The individual steps and scripts used in this guide will be explored in more detail elsewhere.
+
 - Clone repo
-- Inside repo, run `configure.sh` to 
+- Inside repo, run `./pocketsoc_start_local` to 
 	- pull in submodules
+	  - docker-elk
+	  - elastiflow
+	  - misp-docker
 	- set up the networking
-	- patch the misp-web Dockerfile to personalise our instance
+	- patch the misp-web Dockerfile to personalise our instance and deploy other minor changes
 	- set up the Docker volumes for the submodules
 		- misp-web
 		- misp-db
 		- elasticsearch
 		- logstash
 		- kibana
-- Run `docker-compose up`
-- Build will take some time initially if starting from scratch
+		- elastiflow
+    - build the docker images
+      - this will take some time initially if starting from scratch
 - Following build, containers will be automatically started
 - Visit `127.0.0.1:8040` to see MISP login page
 	  - Log in with `admin@admin.test:admin` and change password
@@ -35,7 +41,7 @@ A test, **non-production** SOC demonstrator, intended to track the lifecycle of 
 		- Create index pattern -\>
 		- Discover -\>
 		- For example, choose fields of interest
-- Use  `docker exec -it client bash` to access the client container and access the traffic sources. 
+- Use  `./pocketsoc_attach client` to access the client container and access the traffic sources. 
 
 ### Troubleshooting
 
@@ -66,7 +72,8 @@ The current containers used by this demonstrator are:
 
 ### SOC (Analytics)
 - elasticsearch
-- logstash
+- logstash (bro)
+- logstash (elastiflow)
 - kibana
 
 ### SOC (Alerting)

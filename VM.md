@@ -1,4 +1,4 @@
-# Instructions for VM installation
+# Instructions for using PocketSOC v1 VM
 
 ## Introduction
 

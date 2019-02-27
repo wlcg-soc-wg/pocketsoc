@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This quickstart guide covers the `pocketsoc_v1` VM. This contains a prebuilt version of PocketSOC v1, with docker images already in place.
+This quickstart guide covers the `pocketsoc_v1` VM. This contains a prebuilt version of PocketSOC v1, with docker images already in place. The VM is intended for use during training events and individual testing. 
 
 ## Requirements
 

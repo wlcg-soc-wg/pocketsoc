@@ -8,7 +8,10 @@ A test, **non-production** SOC demonstrator, intended to track the lifecycle of 
 
 The individual steps and scripts used in this guide will be explored in more detail elsewhere.
 
-- Clone repo
+- Clone repo:
+```
+git clone https://gitlab.cern.ch/wlcg-soc-wg/PocketSOC.git
+```
 - Inside repo, run `./pocketsoc_start_local` to 
 	- pull in submodules
 	  - docker-elk

@@ -2,7 +2,7 @@
 
 ## Introduction
 
-A test, **non-production** SOC demonstrator, intended to track the lifecycle of an event. For instructions for the VM installation, click [here](VM.md)
+A test, **non-production** SOC demonstrator, intended to track the lifecycle of an event for demonstration purposes, as well as acting as a testbed for new technologies. For instructions for the VM installation, click [here](VM.md)
 
 ## Quickstart
 
@@ -48,7 +48,7 @@ git clone https://gitlab.cern.ch/wlcg-soc-wg/PocketSOC.git
 ### Troubleshooting
 
 - If containers don't start properly, `Ctrl-C` to stop containers, and re-run `docker-compose up` (particularly if you see error messages like "could not connect to database")
-- Make sure you're in the `docker-soc-demonstrator` directory proper - there are other `docker-compose.yml` files in the `misp-docker` subdirectory (the XME misp-docker repo) and `docker-elk` subdirectory, but we override this with different network settings to make our cluster work.
+- Make sure you're in the `PocketSOC` directory proper - there are other `docker-compose.yml` files in the `misp-docker` subdirectory (the XME misp-docker repo) and `docker-elk` subdirectory, but we override this with different network settings to make our cluster work.
 
 ## Environment
 

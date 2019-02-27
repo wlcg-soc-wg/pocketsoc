@@ -19,11 +19,11 @@ The VM has the following configuration by default.
 
 In addition, 3 ports are forwarded by default:
 
-| Host IP:port   | Guest IP:port  | Description |
-| -------------- | -------------- | ----------- |
-| 127.0.0.1:8060 | 10.0.2.15:8060 | Kibana      |
-| 127.0.0.1:8040 | 10.0.2.15:8060 | MISP        |
-| 127.0.0.1:2222 | 10.0.2.15:22   | SSH         |
+| Description | Host IP:port   | Guest IP:port   |
+| ----------- | -------------- | -------------- |
+| Kibana      | 127.0.0.1:8060 | 10.0.2.15:8060 |
+| MISP        | 127.0.0.1:8040 | 10.0.2.15:8040 |
+| SSH         | 127.0.0.1:2222 | 10.0.2.15:22   |
 
 ## Access
 

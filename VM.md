@@ -50,7 +50,7 @@ It takes some time for the individual services to start up - their progress can 
 
 ## Installation directory
 
-All of the configuration can be found in `development/PocketSOC`; this is a clone of the v1 configuration.
+All of the configuration can be found in `/development/PocketSOC`; this is a clone of the v1 configuration.
 
 ## Accessing kibana and MISP
 

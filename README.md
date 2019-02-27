@@ -120,7 +120,7 @@ A network diagram showing the configuration is given [here][1]
 
 ## Helper scripts
 
-A number of helper, wrapper scripts are included to give easy access to common commands (particularly for use during a demo session). In each case where a `_local` version exists, this assumes the script is being run in the installation directory (i.e. the `$SOCDIR` environment variable is set to ` \`pwd\` `)
+A number of helper, wrapper scripts are included to give easy access to common commands (particularly for use during a demo session). In each case where a `_local` version exists, this assumes the script is being run in the installation directory (i.e. the `$SOCDIR` environment variable is set to `` `pwd ``)
 
 ### pocketsoc_start[_local] NUMBEROFAPACHESERVERS
 

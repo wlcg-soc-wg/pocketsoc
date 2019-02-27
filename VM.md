@@ -10,7 +10,7 @@ This quickstart guide covers the `pocketsoc_v1` VM. This contains a prebuilt ver
 
 ## Configuration
 
-The VM has the following configuration by default. 
+- CentOS 7.6 
 - 2 cores
 - 1 network port (NAT)
 - 8GB RAM

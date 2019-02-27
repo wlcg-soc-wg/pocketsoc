@@ -52,4 +52,11 @@ It takes some time for the individual services to start up - their progress can 
 
 All of the configuration can be found in `development/PocketSOC`; this is a clone of the v1 configuration.
 
+## Accessing kibana and MISP
+
+Access to `kibana` and `MISP` are the same as via the standard install - open a browser and use the following:
+
+- 127.0.0.1:8040: MISP
+- 127.0.0.2:8060: Kibana
+
 

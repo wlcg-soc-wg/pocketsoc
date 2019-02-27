@@ -48,6 +48,14 @@ The individual steps and scripts used in this guide will be explored in more det
 - If containers don't start properly, `Ctrl-C` to stop containers, and re-run `docker-compose up` (particularly if you see error messages like "could not connect to database")
 - Make sure you're in the `docker-soc-demonstrator` directory proper - there are other `docker-compose.yml` files in the `misp-docker` subdirectory (the XME misp-docker repo) and `docker-elk` subdirectory, but we override this with different network settings to make our cluster work.
 
+## Environment
+
+Environment variables recognised by the deployment scripts:
+
+### SOCDIR
+
+Defines the base directory for the pocketsoc installation. In the VM version, this is `/development/PocketSOC/`. The `_local` wrapper scripts described below assume that they are being run from the installation directory.
+
 ## Components
 
 The current containers used by this demonstrator are:
@@ -109,6 +117,31 @@ Each container is configured to belong to a specific set of these:
 The router is then configured to route traffic between the client and apache/flask instances, mirroring the consequent packets to the bro node via the mirror network.
 
 A network diagram showing the configuration is given [here][1]
+
+## Helper scripts
+
+A number of helper, wrapper scripts are included to give easy access to common commands (particularly for use during a demo session). In each case where a `_local` version exists, this assumes the script is being run in the installation directory (i.e. the `$SOCDIR` environment variable is set to ``PWD``)
+
+### pocketsoc_start[_local] NUMBEROFAPACHESERVERS
+
+Runs `configure.sh` to do initial setup and run `docker-compose up`, hence building docker images where necessary. Takes one argument (required), the number of apache instances to spin up [will be set to 1 by default in next version]. 
+
+Pipes the output of `docker-compose` to a logfile, by default found in `$SOCDIR/log/run.log`
+
+### pocketsoc_stop[_local]
+
+Runs `docker-compose stop` to shut down the containers.
+
+### pocketsoc_log[_local]
+
+Tails the run log, by default found in `$SOCDIR/log/run.log`
+
+### pocketsoc_attach		
+### pocketsoc_daemon		
+### pocketsoc_build			
+### pocketsoc_importpatterns	
+### pocketsoc_revert		
+### pocketsoc_build_local		
 
 ## Demo workflow
 

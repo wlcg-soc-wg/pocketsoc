@@ -46,7 +46,7 @@ systemctl stop pocketsoc
 systemctl start pocketsoc
 ```
 
-It takes some time for the individual services to start up - their progress can be seen using `pocketsoc_log` which will give the output of `docker-compose`
+It takes some time for the individual services to start up - their progress can be seen using `pocketsoc_log` which will give the output of `docker-compose`. Note that the logstash components, in particular, can take several minutes to start up fully.
 
 ## Installation directory
 

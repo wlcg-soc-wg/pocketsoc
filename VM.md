@@ -14,7 +14,7 @@ The VM has the following configuration by default.
 - 2 cores
 - 1 network port (NAT)
 - 8GB RAM
-  - Startup has been tested with 4GB, but this option has not been extensivelt tested
+  - Startup has been tested with 4GB, but this option has not been extensively tested
 - USB disabled
 
 In addition, 3 ports are forwarded by default:

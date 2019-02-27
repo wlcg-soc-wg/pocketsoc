@@ -136,12 +136,25 @@ Runs `docker-compose stop` to shut down the containers.
 
 Tails the run log, by default found in `$SOCDIR/log/run.log`
 
-### pocketsoc_attach		
-### pocketsoc_daemon		
-### pocketsoc_build			
-### pocketsoc_importpatterns	
-### pocketsoc_revert		
-### pocketsoc_build_local		
+### pocketsoc_attach
+
+Runs `docker exec -it CONTAINER bash`
+
+### pocketsoc_daemon
+
+As for `pocketsoc_start`, but uses `tee` to mirror the logs to `stdout` and the log file. Primarily for use with VM installation
+
+### pocketsoc_build[_local]
+
+As for `pocketsoc_start`, but only runs build step. Primarily for use in building VM installation.
+
+### pocketsoc_importpatterns
+
+Manually runs step to import kibana patterns into `kibana` for Elastiflow. Runs `docker exec` to run this from `router` container. 
+
+### pocketsoc_revert
+
+Dumps all current elasticsearch indices. *Use with care*
 
 ## Demo workflow
 

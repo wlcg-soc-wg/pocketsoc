@@ -1,8 +1,8 @@
-# DockerSOC
+# PocketSOC
 
 ## Introduction
 
-A test, **non-production** SOC demonstrator, intended to track the lifecycle of an event. 
+A test, **non-production** SOC demonstrator, intended to track the lifecycle of an event. For instructions for the VM installation, click (here)[VM.md]
 
 ## Quickstart
 

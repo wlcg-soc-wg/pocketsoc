@@ -4,7 +4,7 @@
 
 A test, **non-production** SOC demonstrator, intended to track the lifecycle of an event for demonstration purposes, as well as acting as a testbed for new technologies. For instructions for the VM installation and use, click [here](VM.md)
 
-Please note - these instructions are currently being updated to match the newest version of the configuration; this message will be removed once that has happened.
+This documentation is for pocketsoc v1; refer to other branches for different versions
 
 ## Quickstart
 

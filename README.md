@@ -44,6 +44,7 @@ git clone https://gitlab.cern.ch/wlcg-soc-wg/PocketSOC.git
 		- Discover -\>
 		- For example, choose fields of interest
 - Use  `./pocketsoc_attach client` to access the client container and access the traffic sources. 
+- To use Elastiflow, once logstash-flow starts up fully, you need to add the kibana dashboards. Download the appropriately versioned JSON file from [here](https://github.com/robcowart/elastiflow/tree/master/kibana) and upload via the kibana web interface (this will hopefully be included during startup in a future release)
 
 ### Troubleshooting
 
@@ -190,5 +191,5 @@ Steps to follow
 - FOR ADDITIONAL DETAILING 
 	- Various examples of traffic analysis can be carried out using kibana
 	- Various combinations of apache/flask instances can be spun up to represent more "typical" traffic patterns
+	- 
 
-[1]:	demonstrator-network-diagram.svg

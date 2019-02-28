@@ -2,7 +2,7 @@
 
 ## Introduction
 
-A test, **non-production** SOC demonstrator, intended to track the lifecycle of an event for demonstration purposes, as well as acting as a testbed for new technologies. For instructions for the VM installation, click [here](VM.md)
+A test, **non-production** SOC demonstrator, intended to track the lifecycle of an event for demonstration purposes, as well as acting as a testbed for new technologies. For instructions for the VM installation and use, click [here](VM.md)
 
 ## Quickstart
 

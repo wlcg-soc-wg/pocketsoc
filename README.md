@@ -191,5 +191,5 @@ Steps to follow
 - FOR ADDITIONAL DETAILING 
 	- Various examples of traffic analysis can be carried out using kibana
 	- Various combinations of apache/flask instances can be spun up to represent more "typical" traffic patterns
-	- 
+	- Specific Elastiflow examples
 

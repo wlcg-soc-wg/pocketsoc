@@ -3,30 +3,26 @@ version: '3'
 services:
 
   elasticsearch:
-    build:
-      context: ./repos/docker-elk/elasticsearch/
-      args:
-        ELK_VERSION: '6.4.3'
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.5.1
     container_name: elasticsearch
     hostname: elasticsearch
     volumes:
-      - ./volumes/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - ./components/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      #- ./volumes/elasticsearch/config/mapping.json:/config/mapping.json:ro
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
       mirror:
         ipv4_address: 172.20.0.50
 
-  logstash-bro:
-    build:
-      context: ./repos/docker-elk/logstash/
-      args:
-        ELK_VERSION: '6.4.3'
-    container_name: logstash-bro
-    hostname: logstash-bro
+  logstash-zeek:
+    image: docker.elastic.co/logstash/logstash-oss:7.3.2
+    container_name: logstash-zeek
+    hostname: logstash-zeek
     volumes:
-      - ./volumes/logstash-bro/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ./volumes/logstash-bro/pipeline:/usr/share/logstash/pipeline:ro
+      - ./components/logstash-zeek/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./components/logstash-zeek/pipeline:/usr/share/logstash/pipeline:ro
+      - ./components/logstash-zeek/mappings:/usr/share/logstash/mappings:ro
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
@@ -36,16 +32,13 @@ services:
       - elasticsearch
 
   kibana:
-    build:
-      context: ./repos/docker-elk/kibana/
-      args:
-        ELK_VERSION: '6.4.3'
+    image: docker.elastic.co/kibana/kibana-oss:7.5.1
     container_name: kibana
     hostname: kibana
     volumes:
-      - ./volumes/kibana/config/:/usr/share/kibana/config:ro
+      - ./components/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
     ports:
-      - "8060:5601"
+      - "8080:5601"
     networks:
       mirror:
         ipv4_address: 172.20.0.52
@@ -53,18 +46,15 @@ services:
       - elasticsearch
 
   logstash-flow:
-    build:
-      context: ./repos/docker-elk/logstash-flow/
-      args:
-        ELK_VERSION: '6.4.3'
+    build: ./components/logstash-flow/
     container_name: logstash-flow
     hostname: logstash-flow
     volumes:
-      - ./volumes/logstash-flow/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./components/logstash-flow/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./components/logstash-flow/elastiflow.sh:/etc/profile.d/elastiflow.sh:ro
+      - ./components/logstash-flow/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
       - ./volumes/logstash-flow/pipeline:/usr/share/logstash/pipeline:ro
       - ./volumes/logstash-flow/elastiflow:/usr/share/logstash/elastiflow:ro
-      - ./volumes/logstash-flow/profile.d/elastiflow.sh:/etc/profile.d/elastiflow.sh:ro
-      - ./volumes/logstash-flow/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
     environment:
       LS_JAVA_OPTS: "-Xmx2g -Xms2g"
     networks:
@@ -73,35 +63,59 @@ services:
     depends_on:
       - elasticsearch
 
-  #elastalert:
-  #  build: ./components/elastalert/
-  #  container_name: elastalert
-  #  hostname: elastalert
-  #  volumes:
-  #    - ./components/elastalert/config/:/config
-  #  restart: always
-  #  networks:
-  #    mirror:
-  #  depends_on:
-  #    - elasticsearch
-
-  apache:
-    build: ./components/apache/
+  elastalert:
+    build: ./components/elastalert/
+    container_name: elastalert
+    hostname: elastalert
+    volumes:
+      - ./components/elastalert/config/:/config
     restart: always
     networks:
-      external:
+      mirror:
+    depends_on:
+      - elasticsearch
 
-  flask:
-    build: ./components/flask/
-    restart: always
+#  apache:
+#    build: ./components/apache/
+#    restart: always
+#    networks:
+#      external:
+
+  memcached:
+    build: ./components/memcached/
+    container_name: memcached
+    hostname: memcached
+    networks:
+      mirror:
+        ipv4_address: 172.20.0.55
+
+  download:
+    build: ./components/download/
+    container_name: download
+    hostname: download
     networks:
       external:
+        ipv4_address: 172.19.0.67
 
-  ssh:
-    build: ./components/ssh/
-    restart: always
+  target:
+    build: ./components/target/
+    container_name: target
+    hostname: target
     networks:
       external:
+        ipv4_address: 172.19.0.77
+
+#  flask:
+#    build: ./components/flask/
+#    restart: always
+#    networks:
+#      external:
+#
+#  ssh:
+#    build: ./components/ssh/
+#    restart: always
+#    networks:
+#      external:
 
   client:
     build: ./components/client/
@@ -117,13 +131,14 @@ services:
       internal:
         ipv4_address: 172.18.0.15
 
-  bro:
-    build: ./components/bro/
-    container_name: bro
-    hostname: bro
+  zeek:
+    build: ./components/zeek/
+    container_name: zeek
+    hostname: zeek
     volumes:
-      - ./components/bro/config/opt/bro/share/bro/site/local.bro:/opt/bro/share/bro/site/local.bro:ro
-      - ./components/bro/config/etc/filebeat/filebeat.yml:/etc/filebeat/filebeat.yml:ro
+      - ./components/zeek/config/opt/bro/share/bro/site/local.bro:/opt/bro/share/bro/site/local.bro:ro
+      - ./components/zeek/config/etc/filebeat/filebeat.yml:/etc/filebeat/filebeat.yml:ro
+      - ./components/zeek/pcaps:/pcaps
     cap_add:
       - NET_ADMIN
     networks:
@@ -148,49 +163,25 @@ services:
     depends_on:
       - kibana
 
-  misp-web:
-    build: repos/misp-docker/misp-web
-    container_name: misp-web
-    hostname: misp-web
-    depends_on:
-      - misp-db
-    image: misp-web:latest
-    restart: always
+  misp:
+    build: 
+      context: repos/docker-misp/container/
+      args:
+        MYSQL_MISP_PASSWORD: "misp" 
+        POSTFIX_RELAY_HOST: "localhost"
+        MISP_FQDN: "${MISP_HOST}:8443"
+        MISP_EMAIL: "admin@localhost"
+        MISP_GPG_PASSWORD: "misp"
+    container_name: misp
+    hostname: misp
+    image: harvarditsecurity/misp
+    volumes:
+      - ./volumes/mispdb:/var/lib/mysql
+    ports:
+      - 8443:443
     networks:
       mirror:
         ipv4_address: 172.20.0.20
-    links:
-      - misp-db
-    ports:
-      - 8040:80
-    volumes:
-      - ./volumes/misp-web:/var/www/MISP
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_MISP_PASSWORD=misp
-      - MYSQL_HOST=misp-db
-      - MISP_ADMIN_EMAIL=admin@admin.test
-      - MISP_ADMIN_PASSPHRASE=misp
-      - MISP_BASEURL=http:\/\/misp\.test
-      - POSTFIX_RELAY_HOST=relay.fqdn
-      - TIMEZONE=Europe/London
-
-  misp-db:
-    build:
-      context: repos/misp-docker/misp-db
-      args:
-        MYSQL_MISP_PASSWORD: misp
-    container_name: misp-db
-    hostname: misp-db
-    image: misp-db:latest
-    restart: always
-    networks:
-      mirror:
-        ipv4_address: 172.20.0.21
-    volumes:
-      - ./volumes/misp-db:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
 
 networks:
   mirror:

@@ -1,0 +1,3 @@
+#! /bin/bash
+
+docker exec -it zeek cat /config/feeds/testdata.txt

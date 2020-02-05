@@ -1,0 +1,24 @@
+#! /bin/bash
+
+if [ -z $SOCDIR ]; then
+    SOCDIR=`pwd`
+fi
+
+if [ -z $MISP_HOST ]; then 
+    export MISP_HOST="localhost"
+fi
+
+echo "Using $MISP_HOST as hostname" | tee $logfile
+
+logfile=$SOCDIR"/log/build-"`date +%s`".log"
+
+workdir=$SOCDIR/volumes/mispdb
+initfile=$workdir/.db_initialized
+
+if [ -f $initfile ]; then
+    rm -rf $workdir
+    mkdir -p $workdir
+fi
+
+echo "Initialise"
+docker run --rm -v $SOCDIR/volumes/mispdb:/var/lib/mysql harvarditsecurity/misp /init-db

@@ -1,0 +1,5 @@
+#! /bin/bash
+
+docker exec -it zeek /config/pull_misp.sh
+docker exec -it zeek cat /config/feeds/testdata.txt
+docker exec -it zeek /opt/bro/bin/broctl deploy

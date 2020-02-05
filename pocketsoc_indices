@@ -1,0 +1,14 @@
+#! /bin/bash
+
+elastic_state=`docker inspect -f {{.State.Running}} elasticsearch`
+
+while [[ $elastic_state == "false" ]]; do
+    echo "Waiting for elasticsearch"
+    sleep 10
+    elastic_state=`docker inspect -f {{.State.Running}} elasticsearch`
+done
+
+echo "Elasticsearch up"
+
+docker exec elasticsearch curl -s -X GET "localhost:9200/_cat/indices?v"
+

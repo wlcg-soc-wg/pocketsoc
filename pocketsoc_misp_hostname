@@ -1,0 +1,9 @@
+#! /bin/bash
+
+host=`hostname`
+
+CONFIGFILE=/var/www/MISP/app/Config/config.php
+
+docker exec misp bash -c "sed -i \"s/https:\/\/localhost/https:\/\/$host/\" ${CONFIGFILE}"
+
+docker exec misp bash -c "grep $host ${CONFIGFILE}"

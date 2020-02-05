@@ -1,13 +1,27 @@
 #! /bin/bash
 
-scale=$1
+if [ -z $SOCDIR ]; then
+    SOCDIR=`pwd`
+fi
 
-logfile=$SOCDIR"/log/run.log"
+if [ -z $MISP_HOST ]; then
+    export MISP_HOST="localhost"
+fi
 
-$SOCDIR/configure.sh $SOCDIR
+if [ "$#" -ne 1 ]; then
+    scale=1
+else
+    scale=$1
+fi
+
+logfile=$SOCDIR"/log/run-"`date +%s`".log"
+
+$SOCDIR/pocketsoc_configure $SOCDIR
 
 echo "Starting up, see $logfile"
 
 cd $SOCDIR
 
-/usr/local/bin/docker-compose up --remove-orphans --scale apache=$scale > $logfile 2>&1 &
+$SOCDIR/pocketsoc_misp_setup &
+
+/usr/local/bin/docker-compose up --remove-orphans > $logfile 2>&1 &

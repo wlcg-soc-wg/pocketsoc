@@ -1,0 +1,3 @@
+#! /bin/bash
+
+docker exec -it zeek bash -c "memcached-tool memcached:11211 dump"

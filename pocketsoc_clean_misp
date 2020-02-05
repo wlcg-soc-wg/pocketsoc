@@ -1,0 +1,3 @@
+#! /bin/bash
+
+docker exec -it zeek /config/purge_misp_events.sh

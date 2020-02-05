@@ -1,0 +1,9 @@
+#! /bin/bash
+
+if [ -z $SOCDIR ]; then
+    SOCDIR=`pwd`
+fi
+
+$SOCDIR/pocketsoc_clean_misp
+$SOCDIR/pocketsoc_revert_logstash-zeek
+$SOCDIR/pocketsoc_clean_zeek

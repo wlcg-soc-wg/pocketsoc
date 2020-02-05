@@ -1,12 +1,10 @@
 #! /bin/bash
 
+sleeptime=5
+
 echo "Applying routing rules"
 
 /files/routing
-
-echo "Inserting elastiflow patterns"
-curl -X POST http://172.20.0.52:5601/api/saved_objects/index-pattern/elastiflow-* -H "Content-Type: application/json" -H "kbn-xsrf: true" -d @/files/kibana/elastiflow.index_pattern.json
-
 
 (
 echo "Starting up DNS proxy"
@@ -22,6 +20,20 @@ echo "Starting up DNS proxy"
 #
 #machineid=`uuidgen`
 #/usr/sbin/hsflowd -u $machineid -f /files/hsflowd.conf &
+
+sleeptime=150
+
+while ! nc -z -w 1 172.20.0.50 9200; do
+    echo "Not connected to elasticsearch, sleeping for $sleeptime seconds..."
+    sleep $sleeptime
+done
+
+while ! nc -z -w 1 172.20.0.52 5601; do
+    echo "Not connected to kibana, sleeping for $sleeptime seconds..."
+    sleep $sleeptime
+done
+
+/files/import_patterns.sh
 
 echo Startup complete
 

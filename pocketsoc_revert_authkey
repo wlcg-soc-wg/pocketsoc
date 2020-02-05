@@ -1,0 +1,23 @@
+#! /bin/bash
+
+CURLFILE=/config/setauth.sh
+
+AUTHKEY=`docker exec zeek bash -c "grep AUTHKEY ${CURLFILE} | cut -d= -f2"`
+
+echo $AUTHKEY
+
+docker exec zeek bash -c "sed -i \"s/${AUTHKEY}/XXXXXXXX/\" ${CURLFILE}"
+
+docker exec zeek bash -c "grep XXXXXXXX ${CURLFILE}"
+
+# Memcached
+
+CURLFILE=/config/memcached_misp.sh
+
+currentkey=`docker exec zeek bash -c "grep ^key ${CURLFILE} | cut -d\\\\\" -f2"`
+
+echo "Current key:$currentkey"
+
+docker exec zeek bash -c "sed -i \"s/$currentkey/XXXXXXXX/\" ${CURLFILE}"
+
+docker exec zeek bash -c "grep XXXXXXXX ${CURLFILE}"

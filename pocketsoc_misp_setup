@@ -1,0 +1,17 @@
+#! /bin/bash
+
+echo "Initialise Admin User"
+
+until $(curl -k -o /dev/null -s --head --fail https://localhost:8443/users/login/); do
+    echo -n .
+    sleep 5
+done
+
+docker exec misp /bin/bash -c "/var/www/MISP/app/Console/cake password admin@admin.test PocketSOC1234 -o 1"
+
+# Make Live
+
+docker exec misp /bin/bash -c "/var/www/MISP/app/Console/cake live 1"
+
+# Update ORGNAME
+#docker exec misp /bin/bash -c "sed -i 's/ORGNAME/POCKETSOC/' /var/www/MISP/app/Config/config.php"

@@ -1,7 +1,9 @@
 .DS_Store
 volumes/misp-web*
 volumes/misp-db*
+volumes/mispdb*
 volumes/elasticsearch/config/elasticsearch.yml
+volumes/logstash-flow
 volumes/logstash/config/logstash.yml
 volumes/kibana/config/kibana.yml
 .Ulysses*
@@ -9,3 +11,7 @@ data/elasticsearch/config/elasticsearch.yml
 data/logstash/config/logstash.yml
 data/kibana/config/kibana.yml
 log/*
+components/zeek/pcaps/*.pcap
+pocketsoc_build_dev
+pocketsoc_start_dev
+repos/elastiflow*

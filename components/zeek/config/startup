@@ -1,0 +1,22 @@
+#! /bin/bash
+
+# Config and deply bro
+
+sed -i "s/use_json = F/use_json = T/g" /opt/bro/share/bro/base/frameworks/logging/writers/ascii.bro
+
+/opt/bro/bin/broctl deploy
+
+# Config and deploy filebeat
+
+/usr/share/filebeat/bin/filebeat -c /etc/filebeat/filebeat.yml -path.home /usr/share/filebeat -path.config /etc/filebeat -path.data /var/lib/filebeat -path.logs /var/log/filebeat &
+
+# Config and deploy cron to pull MISP data
+
+cp /config/pull_misp /etc/cron.d/pull_misp
+cp /config/memcached_misp /etc/cron.d/memcached_misp
+
+/usr/sbin/crond
+
+# Deploy long running process for interactive access if need be
+ 
+tail -f /dev/null

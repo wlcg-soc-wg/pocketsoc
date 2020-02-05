@@ -1,0 +1,29 @@
+es_host: elasticsearch
+es_port: 9200
+name: misp_src whitelist rule
+index: elastiflow-*
+
+realert:
+  minutes: 10
+
+exponential_realert:
+  hours: 1
+
+type: whitelist
+
+compare_key: "misp_src"
+
+whitelist:
+    - none
+
+ignore_null: true
+
+# Insert alert details here
+
+alert:
+- "telegram"
+
+alert_text_type: aggregation_summary_only
+
+telegram_bot_token: REPLACE_WITH_BOT_TOKEN
+telegram_room_id: "REPLACE_WITH_BOT_ROOM_ID"

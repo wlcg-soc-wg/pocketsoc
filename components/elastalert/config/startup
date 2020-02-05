@@ -11,7 +11,7 @@ echo "Connected to elasticsearch, generating initial index..."
 elastalert-create-index --config /config/config.yaml
 
 echo "Starting elastalert..."
-elastalert --verbose --rule /config/rules/new_term.yaml --config /config/config.yaml
+elastalert --verbose --config /config/config.yaml
 
 echo "Done"
 

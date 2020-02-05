@@ -1,6 +1,6 @@
 #! /bin/bash
 
-message="docker exec bro /config/pull_misp.sh"
+message="docker exec zeek /config/pull_misp.sh"
 
 echo "Running: $message"
 $message

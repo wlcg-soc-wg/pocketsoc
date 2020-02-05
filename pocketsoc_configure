@@ -1,0 +1,44 @@
+#! /bin/bash
+
+if [ "$#" -ne 1 ]; then
+    prefix=`pwd`
+else
+    prefix=$1
+fi
+
+echo "Working in $prefix"
+
+echo "Prepare log directory..."
+
+mkdir -p $prefix/log
+
+echo "Prepare submodules..."
+
+cd $prefix
+
+git submodule update --init
+
+cd $prefix/repos
+
+ELASTIFLOW_VERSION="3.5.3"
+
+if [ -d $prefix/repos/elastiflow ]; then
+    echo "Elastiflow exists, moving on"
+else
+    curl -s -L -O https://github.com/robcowart/elastiflow/archive/v$ELASTIFLOW_VERSION.tar.gz 
+    tar -xzf v$ELASTIFLOW_VERSION.tar.gz
+    mv elastiflow-$ELASTIFLOW_VERSION elastiflow
+    rm v$ELASTIFLOW_VERSION.tar.gz
+fi
+echo "Create networks..."
+
+$prefix/tools/build-networks.sh
+
+echo "Refresh core elastiflow config from submodule..."
+
+mkdir -p $prefix/volumes/logstash-flow/elastiflow/conf.d
+
+cp -R $prefix/repos/elastiflow/logstash/elastiflow $prefix/volumes/logstash-flow
+
+cp $prefix/components/logstash-flow/20_filter_99_misp.logstash.conf $prefix/volumes/logstash-flow/elastiflow/conf.d/
+

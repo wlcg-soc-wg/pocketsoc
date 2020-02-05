@@ -1,3 +1,9 @@
 #! /bin/bash
 
-tail -f $SOCDIR/log/run.log
+if [ -z $SOCDIR ]; then
+    SOCDIR=`pwd`
+fi
+
+logfile=`ls -lart $SOCDIR/log/run* | tail -1 | awk '{print $NF}'`
+
+tail -f $logfile

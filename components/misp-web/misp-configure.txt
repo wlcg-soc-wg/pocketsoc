@@ -1,2 +1,0 @@
-RUN sed -i "s/ORGNAME/Demonstrator/" /var/www/MISP/app/Config/config.php
-RUN sed -i "s/'baseurl'.*=> '',/'baseurl' => 'http:\/\/127.0.0.1:8040',/" /var/www/MISP/app/Config/config.php

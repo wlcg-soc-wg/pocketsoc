@@ -1,11 +1,3 @@
-[submodule "misp-docker"]
-	path = repos/misp-docker
-	url = https://github.com/MISP/misp-docker.git
-        ignore = dirty
-[submodule "docker-elk"]
-	path = repos/docker-elk
-	url = https://github.com/deviantony/docker-elk.git
-        ignore = dirty
-[submodule "elastiflow"]
-	path = repos/elastiflow
-	url = https://github.com/robcowart/elastiflow
+[submodule "repos/docker-misp"]
+	path = repos/docker-misp
+	url = https://github.com/harvard-itsecurity/docker-misp.git

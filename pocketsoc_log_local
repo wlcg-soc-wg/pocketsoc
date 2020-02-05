@@ -1,5 +1,0 @@
-#! /bin/bash
-
-SOCDIR=`pwd`
-
-tail -f $SOCDIR/log/run.log

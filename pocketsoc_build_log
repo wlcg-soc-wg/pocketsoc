@@ -1,0 +1,9 @@
+#! /bin/bash
+
+if [ -z $SOCDIR ]; then
+    SOCDIR=`pwd`
+fi
+
+logfile=`ls -lart $SOCDIR/log/build* | tail -1 | awk '{print $NF}'`
+
+tail -f $logfile

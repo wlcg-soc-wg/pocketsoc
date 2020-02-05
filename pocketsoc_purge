@@ -1,0 +1,4 @@
+#! /bin/bash
+
+docker system prune
+docker image ls | egrep "demo|harvarditsecurity" | awk '{print $1}' | xargs docker image rmi

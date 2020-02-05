@@ -24,6 +24,6 @@ iptables -A FORWARD -i $internal -o $external -j ACCEPT
 
 # Configure mirroring
 
-iptables -t mangle -A PREROUTING -j TEE -i eth0 --gateway bro.mirror
-iptables -t mangle -A PREROUTING -j TEE -i eth2 --gateway bro.mirror
-iptables -t mangle -A POSTROUTING -j TEE --gateway bro.mirror
+iptables -t mangle -A PREROUTING -j TEE -i eth0 --gateway 172.20.0.15
+iptables -t mangle -A PREROUTING -j TEE -i eth2 --gateway 172.20.0.15
+iptables -t mangle -A POSTROUTING -j TEE --gateway 172.20.0.15

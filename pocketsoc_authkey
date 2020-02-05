@@ -1,0 +1,28 @@
+#! /bin/bash
+
+key=`docker exec misp bash -c "/var/www/MISP/app/Console/cake authkey admin@admin.test | tail -1"`
+
+echo "Retrieved key: $key"
+CURLFILE=/config/setauth.sh
+
+currentkey=`docker exec zeek bash -c "grep AUTHKEY ${CURLFILE} | cut -d= -f2"`
+
+echo "Current key:$currentkey"
+
+docker exec zeek bash -c "sed -i \"s/$currentkey/$key/\" ${CURLFILE}"
+
+docker exec zeek bash -c "grep $key ${CURLFILE}"
+
+# Memcached
+
+CURLFILE=/config/memcached_misp.sh
+
+currentkey=`docker exec zeek bash -c "grep ^key ${CURLFILE} | cut -d\\\\\" -f2"`
+
+echo "Current key:$currentkey"
+
+docker exec zeek bash -c "sed -i \"s/$currentkey/$key/\" ${CURLFILE}"
+
+docker exec zeek bash -c "grep $key ${CURLFILE}"
+
+
